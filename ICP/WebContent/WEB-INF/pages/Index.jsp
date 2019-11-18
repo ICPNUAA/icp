@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-	<title>首页</title>
+	<title>登陆后首页</title>
 	 <style type="text/css">
-	body{
+body{
 		background-color: #F0F8FF;
 		background-image: -webkit-gradient(linear,left top,right bottom,
 			from(white),to(#F0F8FF));
@@ -235,11 +235,11 @@ position: absolute;
 	 </style>
 </head>
 
-<body>
+	<body>
 	<div>
 	<h1 style="font-size:45px;font-family:黑体; color:black; font-weight:5px;">NUAA信息分享</h1>
 	</div>
- 	<form action="#" method="get" align="center">
+ <form action="#" method="get" align="center">
             <table border="0px" class="location1">
                <tr height="35px">
                     <td width="400px">
@@ -254,23 +254,21 @@ position: absolute;
         </table>
       </form>
       <div class="location2">
-				<ul>
-				  <li><a href="#home" class="chara1">主页</a></li>
-				  <li><a href="#news" class="chara1">信息类目</a></li>
-				  <li><a href="#contact" class="chara1">近期热门</a></li>
-				  <li><a href="#about" class="chara1">我的通知</a></li>
-				  <li><a href="#about" class="chara1">我的个人信息</a></li>
-				  <li><a href="#about" class="chara1">网站问题反馈</a></li>
-				</ul>
-	</div>
+					<ul>
+					  <li><a href="#home" class="chara1">主页</a></li>
+					  <li><a href="#news" class="chara1">信息类目</a></li>
+					  <li><a href="#contact" class="chara1">近期热门</a></li>
+					  <li><a href="#about" class="chara1">我的通知</a></li>
+					  <li><a href="#about" class="chara1">我的个人信息</a></li>
+					  <li><a href="#about" class="chara1">网站问题反馈</a></li>
+					</ul>
+		</div>
 
-    <div class="div1">
-        <form action="${pageContext.request.contextPath}/LoginIndex" method="post">
-            <input name="username"  type="text" class="text" placeholder="username"/>
-            <input name="password" type="password" class="text" placeholder="password"/>
-            <td><input type="submit" name="button"  value="登陆"/></td>
-            <td><input type="button" name="button"  value="注册"/></td>
-            <a href="">忘记密码</a>
+        <div class="div1">
+            <form >
+             <h5 style="font-size:17px;font-family:黑体; color:white; font-weight:5px;">登录时间：2018/11/22/17：12</h5>
+            
+           <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">XXX,欢迎你！</h5>
             
         </form>
     </div>
