@@ -195,7 +195,8 @@ li a:hover {
 	    </form>
     </div>
 <!-- 显示已发送通知，使用表格 -->
-    <form >
+	<div>
+    <form style="position:relative;left:50px">
         <table border="0px" align="center">
             <tr height="55px">
                 <td width="1000px">
@@ -206,6 +207,6 @@ li a:hover {
             <%=MyAnnouncementUI.ShowMyAnnouncement(session.getAttribute("userID").toString()) %>
         </table>
     </form>
-
+	</div>
 	</body>
 </html>

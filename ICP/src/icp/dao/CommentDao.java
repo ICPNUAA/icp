@@ -60,4 +60,21 @@ public class CommentDao {
 		}
 		return result;
 	}
+
+	public boolean DeleteCommentByAnnouncementID(String _announcementID) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "delete from comment where announcementID='" + _announcementID + "'";
+			result = statement.execute(sqlstr);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
 }

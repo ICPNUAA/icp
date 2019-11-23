@@ -56,13 +56,18 @@ public class MyAnnouncementUI extends HttpServlet {
 			++i;
 			resultStr.append(
 							"<tr height=\"55px\">\r\n" + 
-							"   <td>\r\n" + 
+							"   <td >\r\n" + 
 							"       <a href=\"/ICP/ShowAnnouncementUI?announcementID="+
 									announcementBean.GetAnnouncementID()+
-							"\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:1000px\">"+
+							"\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:500px\">"+
 									i+"、"+announcementBean.GetAnnouncementTitle()+
-							"		</a>\r\n" + 
+							"</a>\r\n" + 
 							"   </td>\r\n" + 
+							"   <td >\r\n" + 
+							"       <a href=\"/ICP/DeleteAnnouncement?announcementID=" + 
+									announcementBean.GetAnnouncementID() + 
+							"		\"  onclick=\"alert('删除成功')\">删除</a>\r\n" + 
+							"   </td>" + 
 							"</tr>"
 							);
 		}

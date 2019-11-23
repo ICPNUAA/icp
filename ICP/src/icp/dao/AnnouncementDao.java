@@ -131,6 +131,25 @@ public class AnnouncementDao {
 		return result;
 	}
 
+	public boolean DeleteAnnouncement(String _announcementID) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+
+			statement = connection.createStatement();
+			String sqlsen = "delete from announcement where announcementID='" + _announcementID + "'";
+			result = statement.execute(sqlsen);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+
 	public boolean AddAnnouncementReadAmount(String _id, int _amount) {
 		boolean result = false;
 
