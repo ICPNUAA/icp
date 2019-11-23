@@ -47,10 +47,9 @@ public class MyAnnouncementUI extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public static String ShowMyAnnouncement() {
+	public static String ShowMyAnnouncement(String _userID) {
 		AnnouncementDao announcementDao = new AnnouncementDao();
-		// announcementDao.GetMyAnnouncement(request.getSession().getAttribute("userID").toString());
-		List<AnnouncementBean> announcementBeans = announcementDao.GetUserAnnouncements("August0v0");
+		List<AnnouncementBean> announcementBeans = announcementDao.GetUserAnnouncements(_userID);
 		StringBuffer resultStr = new StringBuffer();
 		int i=0;
 		for (AnnouncementBean announcementBean : announcementBeans) {

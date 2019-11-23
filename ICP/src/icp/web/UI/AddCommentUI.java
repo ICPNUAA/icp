@@ -16,22 +16,25 @@ import icp.dao.AnnouncementDao;
 @WebServlet("/AddCommentUI")
 public class AddCommentUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddCommentUI() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AddCommentUI() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		AnnouncementDao announcementDao = new AnnouncementDao();
 		String announcementID = (String) request.getParameter("announcementID");
+		request.setAttribute("announcementID", announcementID);
 		AnnouncementBean announcementBean = announcementDao.GetAnnouncementByID(announcementID);
 		announcementBean.SetReadAmount(announcementBean.GetReadAmount() + 1);
 		announcementDao.UpdateAnnouoncement(announcementBean);
@@ -43,13 +46,16 @@ public class AddCommentUI extends HttpServlet {
 		else
 			request.setAttribute("readAmount", "10000+");
 		request.setAttribute("publishTime", announcementBean.GetPublishTime());
-		request.getRequestDispatcher("/WEB-INF/pages/AddComment.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/AddComment.jsp?announcementID=" + announcementID + "")
+				.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

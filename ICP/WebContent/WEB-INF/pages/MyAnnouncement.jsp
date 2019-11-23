@@ -203,7 +203,7 @@ li a:hover {
                 </td>
             </tr>
             <!-- 中间正文 -->
-            <%=MyAnnouncementUI.ShowMyAnnouncement() %>
+            <%=MyAnnouncementUI.ShowMyAnnouncement(session.getAttribute("userID").toString()) %>
         </table>
     </form>
 

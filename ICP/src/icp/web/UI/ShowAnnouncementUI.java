@@ -1,8 +1,7 @@
 package icp.web.UI;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import icp.bean.AnnouncementBean;
+import icp.bean.CommentBean;
 import icp.dao.AnnouncementDao;
+import icp.dao.CommentDao;
 
 /**
  * Servlet implementation class ShowAnnouncementUI
@@ -20,8 +21,8 @@ import icp.dao.AnnouncementDao;
 public class ShowAnnouncementUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static String announcementID;
-	private static boolean commentAllowed;
+	private static String mAnnouncementID;
+	private static boolean mCommentAllowed;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -39,10 +40,10 @@ public class ShowAnnouncementUI extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		AnnouncementDao announcementDao = new AnnouncementDao();
-		announcementID = (String) request.getParameter("announcementID");
-		AnnouncementBean announcementBean = announcementDao.GetAnnouncementByID(announcementID);
+		mAnnouncementID = (String) request.getParameter("announcementID");
+		AnnouncementBean announcementBean = announcementDao.GetAnnouncementByID(mAnnouncementID);
 		announcementBean.SetReadAmount(announcementBean.GetReadAmount() + 1);
-		announcementDao.UpdateAnnouoncement(announcementBean);
+		announcementDao.AddAnnouncementReadAmount(mAnnouncementID, announcementBean.GetReadAmount());
 		request.setAttribute("announcementTitle", announcementBean.GetAnnouncementTitle());
 		request.setAttribute("announcementContent", announcementBean.GetAnnouncementContent());
 		int readAmount = announcementBean.GetReadAmount();
@@ -51,7 +52,7 @@ public class ShowAnnouncementUI extends HttpServlet {
 		else
 			request.setAttribute("readAmount", "10000+");
 		request.setAttribute("publishTime", announcementBean.GetPublishTime());
-		commentAllowed = announcementBean.GetCommentAllowed();
+		mCommentAllowed = announcementBean.GetCommentAllowed();
 		request.getRequestDispatcher("/WEB-INF/pages/ShowAnnouncement.jsp").forward(request, response);
 	}
 
@@ -66,24 +67,27 @@ public class ShowAnnouncementUI extends HttpServlet {
 	}
 
 	public static String ShowComment() {
-		if (!commentAllowed)
+		if (!mCommentAllowed)
 			return "";
-		StringBuffer resultStr=new StringBuffer();
-		resultStr.append("<div class=\"comt layui-clear\" name=\"comment\">\r\n" 
-				+ "<p class=\"pull-left\">评论</p>\r\n"
-				+ "<a href=\"/ICP/AddCommentUI?announcementID=" + announcementID
+		StringBuffer resultStr = new StringBuffer();
+		resultStr.append("<div class=\"comt layui-clear\" name=\"comment\">\r\n" + "<p class=\"pull-left\">评论</p>\r\n"
+				+ "<a href=\"/ICP/AddCommentUI?announcementID=" + mAnnouncementID
 				+ "\" class=\"pull-right\" >写评论</a>\r\n" + "</div>");
-		//show comments
-//		"<div class=\"info-item\">\r\n" + 
-//		"                                <img class=\"info-img\" src=\"css&js/res/static/images/info-img.png\" alt=\"\">\r\n" + 
-//		"                                <div class=\"info-text\">\r\n" + 
-//		"                                    <p class=\"title count\">\r\n" + 
-//		"                                        <span class=\"name\">同学A</span>\r\n" + 
-//		"                                        <span class=\"info-img like\"><i class=\"layui-icon layui-icon-praise\"></i>5.8万</span>\r\n" + 
-//		"                                    </p>\r\n" + 
-//		"                                    <p class=\"info-intr\">好棒棒哦</p>\r\n" + 
-//		"                                </div>\r\n" + 
-//		"                            </div>"
+		// show comments
+		CommentDao commentDao=new CommentDao();
+		List<CommentBean> commentBeans=commentDao.GetComments(mAnnouncementID);
+		for (CommentBean commentBean : commentBeans) {
+			resultStr.append(
+					"<div class=\"info-item\" style=\"position:relative;left:-70px;top:-70px\">\r\n" + 
+					"    <div class=\"info-text\">\r\n" + 
+					"       <p class=\"title count\">\r\n" + 
+					"            <span class=\"name\">"+commentBean.GetUserID()+"</span>\r\n" + 
+					"             </p>\r\n" + 
+					"       <p class=\"info-intr\">"+commentBean.GetCommentContent()+"</p>\r\n" + 
+					"     </div>\r\n" + 
+					"</div>");
+		}
+		
 		return resultStr.toString();
 	}
 

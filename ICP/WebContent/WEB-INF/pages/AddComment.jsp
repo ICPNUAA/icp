@@ -144,7 +144,7 @@
                     <div class="contar-wrap">
                         <div class="item">
                             <div class="item-box  layer-photos-demo1 layer-photos-demo">
-                                <h3><a href="#">${announcementTitle}</a></h3>
+                                <h3>${announcementTitle}</h3>
                                 <h5>发布于：<span>${publishTime}</span></h5>
                                 <p>${announcementContent}</p>
                                 <div class="count layui-clear">
@@ -153,14 +153,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="layui-form" action="">
+                        <form class="layui-form" action="${pageContext.request.contextPath}/AddComment">
                             <div class="layui-form-item layui-form-text">
-                                <textarea  class="layui-textarea"  style="resize:none" placeholder="写点什么啊"></textarea>
+                                <textarea  class="layui-textarea"  style="resize:none" placeholder="写点什么啊" name="commentContent"></textarea>
                             </div>
                             <div class="btnbox" style="position: relative;left: 90%">
-                                <a href=""  id="sure">
-                                    确定
-                                </a>
+                            	<input name="announcementID" type="hidden" value="${announcementID}">
+                                <input type=submit value="确定"/>
                             </div>
                         </form>
                     </div>
@@ -204,9 +203,8 @@
     <!--id-->
     <div class="left2">
         <form >
-            <h5 style="font-size:17px;font-family:黑体; color:white; font-weight:5px;">登录时间：2018/11/22/17：12</h5>
 
-            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">XXX,欢迎你！</h5>
+            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;"><%=session.getAttribute("userID") %>,欢迎你！</h5>
         </form>
     </div>
     <!--导航-->

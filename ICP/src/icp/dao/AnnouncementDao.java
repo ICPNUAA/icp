@@ -113,16 +113,35 @@ public class AnnouncementDao {
 		Statement statement = null;
 		try {
 			statement = connection.createStatement();
-			String sqlstr = "update announcement set "
-					+ "announcementTitle='" + _announcementBean.GetAnnouncementTitle()
-					+ "',announcementContent='" + _announcementBean.GetAnnouncementContent() 
-					+ "',publishTime='" + _announcementBean.GetPublishTime() 
-					+ "',announcementTags='" + _announcementBean.GetAnnouncementTags() 
-					+ "',commentAllowed=" + (_announcementBean.GetCommentAllowed()?1:0)
-					+ ",announcementType='" + _announcementBean.GetType()
-					+ "',readAmount=" + _announcementBean.GetReadAmount()
+			String sqlstr = "update announcement set " + "announcementTitle='"
+					+ _announcementBean.GetAnnouncementTitle() + "',announcementContent='"
+					+ _announcementBean.GetAnnouncementContent() + "',publishTime='"
+					+ _announcementBean.GetPublishTime() + "',announcementTags='"
+					+ _announcementBean.GetAnnouncementTags() + "',commentAllowed="
+					+ (_announcementBean.GetCommentAllowed() ? 1 : 0) + ",announcementType='"
+					+ _announcementBean.GetType() + "',readAmount=" + _announcementBean.GetReadAmount()
 					+ " where announcementID='" + _announcementBean.GetAnnouncementID() + "'";
 			result = statement.execute(sqlstr);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+
+	public boolean AddAnnouncementReadAmount(String _id, int _amount) {
+		boolean result = false;
+
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+
+			result = statement
+					.execute("update announcement set readAmount=" + _amount + " where announcementID='" + _id + "'");
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

@@ -5,19 +5,16 @@ public class CommentBean {
 	private String mAnnouncementID;
 	private String mUserID;
 	private String mCommentContent;
-	private int mLikeAmount;
 
 	public CommentBean() {
 
 	}
 
-	public CommentBean(String _commentID, String _announcementID, String _userID, String _commentContent,
-			int _liskAmount) {
+	public CommentBean(String _commentID, String _announcementID, String _userID, String _commentContent) {
 		mCommentID = _commentID;
 		mCommentContent = _commentContent;
 		mAnnouncementID = _announcementID;
 		mUserID = _userID;
-		mLikeAmount = _liskAmount;
 	}
 	
 	public String GetCommentID() {
@@ -50,13 +47,5 @@ public class CommentBean {
 	
 	public void setmCommentContent(String _commentContent) {
 		this.mCommentContent = _commentContent;
-	}
-	
-	public int GetLikeAmount() {
-		return mLikeAmount;
-	}
-	
-	public void SetLikeAmount(int _likeAmount) {
-		this.mLikeAmount = _likeAmount;
 	}
 }

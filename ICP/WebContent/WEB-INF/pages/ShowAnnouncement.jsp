@@ -145,7 +145,7 @@
                     <div class="contar-wrap">
                         <div class="item">
                             <div class="item-box  layer-photos-demo1 layer-photos-demo">
-                                <h3><a href="#">${announcementTitle}</a></h3>
+                                <h3>${announcementTitle}</h3>
                                 <h5>发布于：<span>${publishTime}</span></h5>
                                 <p>${announcementContent}</p>
                                 <div class="count layui-clear">
@@ -155,7 +155,7 @@
                             </div>
                         </div>
                         
-                        <div id="LAY-msg-box" >
+                        <div id="LAY-msg-box">
                             <%=ShowAnnouncementUI.ShowComment() %>
                         </div>
                     </div>

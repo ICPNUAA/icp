@@ -206,7 +206,7 @@ button {
 						style="width: 300px; height: 20px">用#号分隔
 				</p>
 				<textarea id="editor_id" name="content"
-					style="width: 95%; height: 480px;"></textarea>
+					style="width: 95%; height: 480px;" placeholder="输入通知内容"></textarea>
 				<input type="checkbox" name="commentAllowed" checked="checked"
 					id="checkcomment" /> <label for="checkcomment">允许评论</label>
 				<button id="submit"
