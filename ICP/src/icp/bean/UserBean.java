@@ -4,32 +4,37 @@ import java.util.Date;
 
 public class UserBean {
 
-	private String mUserName;
+	private String mUserID;
 	private String mPassword;
-	
-	public String GetUserName() {
-		return mUserName;
+	private boolean mIsAdmin;
+	private String mStudentNumber;
+	private String mRealName;
+	private String mUserTag;
+	private boolean mIsVerified;
+
+	public String GetUserID() {
+		return mUserID;
 	}
-	
+
 	public String GetPassword() {
 		return mPassword;
 	}
-	
-	public void SetUserName(String _username) {
-		this.mUserName=_username;
+
+	public void SetUserID(String _userid) {
+		this.mUserID = _userid;
 	}
-	
+
 	public void SetPassword(String _password) {
-		this.mPassword=_password;
+		this.mPassword = _password;
 	}
-	
+
 	public UserBean() {
-		
+
 	}
-	
-	public UserBean(String _username,String _password) {
+
+	public UserBean(String _userid, String _password) {
 		super();
-		this.mUserName=_username;
-		this.mPassword=_password;
+		this.mUserID = _userid;
+		this.mPassword = _password;
 	}
 }
