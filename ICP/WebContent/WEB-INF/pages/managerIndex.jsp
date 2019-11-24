@@ -1,8 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-	<title>发管理员审核</title>
+	<title>管理员审核</title>
 	 <style type="text/css">
 body{
 		background-color: #F0F8FF;
@@ -178,10 +181,7 @@ position: absolute;
                       <li><a href="#home" class="chara1">主页</a></li>
                       <li><a href="#news">信息类目</a></li>
                       <li><a href="#contact">近期热门</a></li>
-                      <li><a href="#announcement">我的通知</a></li>
-                      <li><a href="#myinfo" class="chara1">我的个人信息</a></li>
                       <li><a href="#myinfo" class="chara1">审核信息</a></li>
-                      <li><a href="#return" class="chara1">网站问题反馈</a></li>
                     </ul>
         </div>
 
@@ -189,59 +189,24 @@ position: absolute;
             <form >
              <h5 style="font-size:17px;font-family:黑体; color:white; font-weight:5px;">登录时间：2018/11/22/17：12</h5>
             
-           <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">XXX,欢迎你！</h5>   
+           <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">管理员,欢迎你！</h5>   
         </form>
     </div>
  <form >
-    <table border="1px" align="center">
-        <tr height="75px">
-                <td width="800px">
-                    <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">来自用户 XXX 的审核申请</h5>
+    <table border="1px" align="center" margin-left="100px">
+    <c:forEach items="${requestScope.applicant} " var="applicant">
+        <tr height="70px">
+                <td width="500px">
+                    <c:out value="${applicant} "/>
                 </td>
                 <td width="100px">
                 <button type="submit" >点击查看</button>
                 </td>
             </tr>
-
-            <tr height="50px" width="">
-                <td width="800px">
-                    <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">来自用户 XXX 的审核申请</h5>
-                </td>
-                <td width="100px">
-                <button type="submit" >点击查看</button>
-                </td>
-             </tr>
-
-             <tr height="50px">
-                    <td width="800px">
-                    <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">来自用户 XXX 的审核申请</h5>
-                </td>
-                <td width="100px">
-                <button type="submit" >点击查看</button>
-                </td>
-             </tr>
-
-            <tr height="50px">
-                    <td width="800px">
-                    <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">来自用户 XXX 的审核申请</h5>
-                </td>
-                <td width="100px">
-                <button type="submit" >点击查看</button>
-                </td>
-            </tr>
-             <tr height="50px">
-                    <td width="800px">
-                    <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">来自用户 XXX 的审核申请</h5>
-                </td>
-                <td width="100px">
-                <button type="submit" >点击查看</button>
-                </td>
-             </tr>
+	</c:forEach>
         </table>
     </form>
-
-
-<div style="height:20px;margin-left:600px ;">
+<div style="height:px;margin-left:100px ;">
 <span id="spanFirst">第一页</span>
 <span id="spanPre">上一页</span>
 <span id="spanNext">下一页</span>
@@ -259,8 +224,8 @@ var spanNext = document.getElementById("spanNext");
 var spanFirst = document.getElementById("spanFirst");
 var spanLast = document.getElementById("spanLast");
 var numberRowsInTable = theTable.rows.length;
-var pageSize = ;
-var page = ;
+var pageSize = 5;
+var page = 5;
 //下一页
 function next() {
 hideTable();
@@ -291,7 +256,7 @@ currentRow = numberRowsInTable;
 for ( var i = maxRow; i< currentRow; i++ ) {
 theTable.rows[i].style.display = '';
 }
-if ( maxRow == ) {
+if ( maxRow == 0) {
 preText();
 firstText();
 }
@@ -302,8 +267,8 @@ lastLink();
 //第一页
 function first() {
 hideTable();
-page = ;
-for ( var i = ; i<pageSize; i++ ) {
+page = 1;
+for ( var i = 0; i<pageSize; i++ ) {
 theTable.rows[i].style.display = '';
 }
 showPage();

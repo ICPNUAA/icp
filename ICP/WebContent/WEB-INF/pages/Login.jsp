@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-	<title>首页</title>
+	<title>登陆</title>
 	 <style type="text/css">
 	body{
 		background-color: #F0F8FF;
@@ -265,11 +265,12 @@ position: absolute;
 	</div>
 
     <div class="div1">
-        <form action="${pageContext.request.contextPath}/LoginIndex" method="post">
+        <form action="${pageContext.request.contextPath}/Login" method="post">
             <input name="username"  type="text" class="text" placeholder="username"/>
             <input name="password" type="password" class="text" placeholder="password"/>
             <td><input type="submit" name="button"  value="登陆"/></td>
             <td><input type="button" name="button"  value="注册"/></td>
+            <td><h5 id="message">${message}</h5></td>
             <a href="">忘记密码</a>
             
         </form>

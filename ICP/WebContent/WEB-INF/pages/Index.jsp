@@ -259,7 +259,7 @@ position: absolute;
 					  <li><a href="#news" class="chara1">信息类目</a></li>
 					  <li><a href="#contact" class="chara1">近期热门</a></li>
 					  <li><a href="#about" class="chara1">我的通知</a></li>
-					  <li><a href="#about" class="chara1">我的个人信息</a></li>
+					  <li><a href="${pageContext.request.contextPath}/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
 					  <li><a href="#about" class="chara1">网站问题反馈</a></li>
 					</ul>
 		</div>
@@ -268,7 +268,7 @@ position: absolute;
             <form >
              <h5 style="font-size:17px;font-family:黑体; color:white; font-weight:5px;">登录时间：2018/11/22/17：12</h5>
             
-           <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">XXX,欢迎你！</h5>
+           <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;" >${registername}</h5>
             
         </form>
     </div>

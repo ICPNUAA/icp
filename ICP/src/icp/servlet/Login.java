@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import icp.bean.UserBean;
 import icp.dao.UserDao;
@@ -40,6 +41,9 @@ public class Login extends HttpServlet {
 		}
 		else {
 			//login succeed
+			request.setAttribute("registername",userid+"£¬ÄãºÃ£¡");
+			HttpSession session = request.getSession();
+			session.setAttribute("userid", userid);
 			request.getRequestDispatcher("/WEB-INF/pages/Index.jsp").forward(request, response);
 		}
 	}
