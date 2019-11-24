@@ -11,11 +11,11 @@ public class UserBean {
 	private String mRealName;
 	private String mUserTag;
 	private boolean mIsVerified;
-	
+
 	public String GetUserID() {
 		return mUserID;
 	}
-	
+
 	public String GetPassword() {
 		return mPassword;
 	}
@@ -34,7 +34,7 @@ public class UserBean {
 	public boolean GetIsVerified() {
 		return mIsVerified;
 	}
-	
+
 	
 	
 	
@@ -45,10 +45,11 @@ public class UserBean {
 		this.mUserID=_userid;
 	}
 	
+	
 	public void SetPassword(String _password) {
 		this.mPassword=_password;
 	}
-	
+
 	public void SetStudentNumber(String _studentnumber) {
 		this.mStudentNumber=_studentnumber;
 	}
@@ -72,9 +73,9 @@ public class UserBean {
 	
 
 	public UserBean() {
-		
+
 	}
-	
+
 	public UserBean(String _userid,String _password,boolean _isadmin,
 			String _studentnumber,String _realname,String _usertag,
 			boolean _isverified) {

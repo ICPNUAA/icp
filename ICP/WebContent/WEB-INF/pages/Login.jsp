@@ -258,7 +258,7 @@ position: absolute;
 				  <li><a href="#home" class="chara1">主页</a></li>
 				  <li><a href="#news" class="chara1">信息类目</a></li>
 				  <li><a href="#contact" class="chara1">近期热门</a></li>
-				  <li><a href="#about" class="chara1">我的通知</a></li>
+				  <li><a href="#about" class="chara1">我发布的通知</a></li>
 				  <li><a href="#about" class="chara1">我的个人信息</a></li>
 				  <li><a href="#about" class="chara1">网站问题反馈</a></li>
 				</ul>
