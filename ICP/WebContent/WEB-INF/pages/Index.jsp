@@ -1,3 +1,4 @@
+<%@page import="icp.web.UI.LoginUI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -255,19 +256,19 @@ position: absolute;
       </form>
       <div class="location2">
 					<ul>
-					  <li><a href="#home" class="chara1">主页</a></li>
-					  <li><a href="#news" class="chara1">信息类目</a></li>
-					  <li><a href="#contact" class="chara1">近期热门</a></li>
-					  <li><a href="${pageContext.request.contextPath}/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
-					  <li><a href="#about" class="chara1">我的个人信息</a></li>
-					  <li><a href="#about" class="chara1">网站问题反馈</a></li>
+					  <li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
+                  <li><a href="#news" class="chara1">信息类目</a></li>
+                  <li><a href="#contact" class="chara1">近期热门</a></li>
+                  <li><a href="/ICP/MyAnnouncementUI" class="chara1">我的通知</a></li>
+                  <li><a href="#myinfo" class="chara1">我的个人信息</a></li>
+                  <li><a href="#return" class="chara1">网站问题反馈</a></li>
 					</ul>
 		</div>
 
         <div class="div1">
          <form >
          
-	            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;"><%=session.getAttribute("userID") %>,欢迎你！</h5>
+	            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;"><%=session.getAttribute("userID") %>，欢迎你！</h5>
             
         </form>
     </div>
@@ -276,7 +277,7 @@ position: absolute;
 </div>
 <div  class="divcube1" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("组织机构") %>
 </div>
  
 <div  class="divcubeb2" >
@@ -284,7 +285,7 @@ position: absolute;
 </div>
 <div  class="divcube2" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("体育赛事") %>
 </div>
 
 <div  class="divcubeb3" >
@@ -292,7 +293,7 @@ position: absolute;
 </div>
 <div  class="divcube3" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("学术科研") %>
 </div>
 
 
@@ -301,7 +302,7 @@ position: absolute;
 </div>
 <div  class="divcube4" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("文娱艺术") %>
 </div>
 
 	</body>

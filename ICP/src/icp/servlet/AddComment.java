@@ -31,12 +31,15 @@ public class AddComment extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		String _announcementID = request.getParameter("announcementID");
-		String _userID = (String) request.getSession().getAttribute("userID");
-		String _commentContent = request.getParameter("commentContent");
-		CommentDao commentDao = new CommentDao();
-		commentDao.AddComment(_announcementID, _userID, _commentContent);
+		if(request.getSession().getAttribute("token")!=null) {
+			request.getSession().removeAttribute("token");
+			
+			String _announcementID = request.getParameter("announcementID");
+			String _userID = (String) request.getSession().getAttribute("userID");
+			String _commentContent = request.getParameter("commentContent");
+			CommentDao commentDao = new CommentDao();
+			commentDao.AddComment(_announcementID, _userID, _commentContent);
+		}
 		request.getRequestDispatcher("ShowAnnouncementUI").forward(request, response);
 	}
 

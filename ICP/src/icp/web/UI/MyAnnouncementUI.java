@@ -49,7 +49,7 @@ public class MyAnnouncementUI extends HttpServlet {
 	
 	public static String ShowMyAnnouncement(String _userID) {
 		AnnouncementDao announcementDao = new AnnouncementDao();
-		List<AnnouncementBean> announcementBeans = announcementDao.GetUserAnnouncements(_userID);
+		List<AnnouncementBean> announcementBeans = announcementDao.GetAnnouncementsByUserID(_userID);
 		StringBuffer resultStr = new StringBuffer();
 		int i=0;
 		for (AnnouncementBean announcementBean : announcementBeans) {

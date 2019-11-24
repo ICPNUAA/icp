@@ -75,7 +75,7 @@ public class AnnouncementDao {
 		return announcementBean;
 	}
 
-	public List<AnnouncementBean> GetUserAnnouncements(String _userid) {
+	public List<AnnouncementBean> GetAnnouncementsByUserID(String _userid) {
 		List<AnnouncementBean> announcementBeans = new ArrayList<>();
 
 		Connection connection = DBUtil.GetConnection();
@@ -103,6 +103,34 @@ public class AnnouncementDao {
 		return announcementBeans;
 	}
 
+	public List<AnnouncementBean> GetAnnouncementsByType(String _type){
+		List<AnnouncementBean> announcementBeans = new ArrayList<>();
+
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			String strsql = "select * from announcement where announcementType='" + _type + "'";
+			resultSet = statement.executeQuery(strsql);
+			while (resultSet.next()) {
+				// String anID=resultSet.getString("announcementID");
+				AnnouncementBean tempBean = new AnnouncementBean(resultSet.getString("announcementID"), resultSet.getString("userID"),
+						resultSet.getString("announcementTitle"), resultSet.getString("announcementContent"),
+						resultSet.getString("publishTime"), resultSet.getBoolean("commentAllowed"),
+						resultSet.getString("announcementTags"), resultSet.getString("announcementType"),
+						resultSet.getInt("readAmount"));
+				announcementBeans.add(tempBean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return announcementBeans;
+	}
+	
 	public boolean UpdateAnnouoncement(AnnouncementBean _announcementBean) {
 		Date _publishTime = new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

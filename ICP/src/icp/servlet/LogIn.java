@@ -40,12 +40,12 @@ public class Login extends HttpServlet {
 		UserBean userBean = userDao.CheckLogin(userid, password);
 		if (userBean == null) {
 			// login fail
-			request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+			request.getRequestDispatcher("LoginUI").forward(request, response);
 		} else {
 			// login succeed
 			HttpSession session = request.getSession(true);
 			session.setAttribute("userID", userBean.GetUserID());
-			request.getRequestDispatcher("/WEB-INF/pages/Index.jsp").forward(request, response);
+			request.getRequestDispatcher("IndexUI").forward(request, response);
 		}
 	}
 

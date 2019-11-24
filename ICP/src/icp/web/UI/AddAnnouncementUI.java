@@ -35,10 +35,6 @@ public class AddAnnouncementUI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userid=(String) request.getSession().getAttribute("userID");
-//		UserDao userDao=new UserDao();
-//		userDao
-		
 		request.getRequestDispatcher("/WEB-INF/pages/AddAnnouncement.jsp").forward(request, response);
 	}
 

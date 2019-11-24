@@ -160,6 +160,7 @@
                             <div class="btnbox" style="position: relative;left: 90%">
                             	<input name="announcementID" type="hidden" value="${announcementID}">
                                 <input type=submit value="确定"/>
+                                <%request.getSession().setAttribute("token", true); %>
                             </div>
                         </form>
                     </div>
@@ -204,17 +205,17 @@
     <div class="left2">
         <form >
 
-            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;"><%=session.getAttribute("userID") %>,欢迎你！</h5>
+            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;"><%=session.getAttribute("userID") %>，欢迎你！</h5>
         </form>
     </div>
     <!--导航-->
     <div class="left3">
                 <ul>
 
-                  <li><a href="#home" class="chara1">主页</a></li>
+                  <li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
                   <li><a href="#news" class="chara1">信息类目</a></li>
                   <li><a href="#contact" class="chara1">近期热门</a></li>
-                  <li><a href="#announcement" class="chara1">我的通知</a></li>
+                  <li><a href="/ICP/MyAnnouncementUI" class="chara1">我的通知</a></li>
                   <li><a href="#myinfo" class="chara1">我的个人信息</a></li>
                   <li><a href="#return" class="chara1">网站问题反馈</a></li>
                 </ul>

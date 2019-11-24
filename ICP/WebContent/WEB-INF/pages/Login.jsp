@@ -1,3 +1,4 @@
+<%@page import="icp.web.UI.LoginUI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -279,7 +280,7 @@ position: absolute;
 </div>
 <div  class="divcube1" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("组织机构") %>
 </div>
  
 <div  class="divcubeb2" >
@@ -287,7 +288,7 @@ position: absolute;
 </div>
 <div  class="divcube2" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("体育赛事") %>
 </div>
 
 <div  class="divcubeb3" >
@@ -295,7 +296,7 @@ position: absolute;
 </div>
 <div  class="divcube3" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("学术科研") %>
 </div>
 
 
@@ -304,7 +305,7 @@ position: absolute;
 </div>
 <div  class="divcube4" >
 <div style="float:right;"><a href="http://www.baidu.com">了解更多>></a></div>
-<div style=""></div><div></div><div></div>
+<%=LoginUI.ShowAnnouncementByType("文娱艺术") %>
 </div>
 
 	</body>

@@ -31,15 +31,19 @@ public class AddAnnouncement extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String userid = (String) request.getSession(true).getAttribute("userID");
-		String commentallowed = request.getParameter("commentAllowed");
-		String tags = request.getParameter("tags");
-		String types = request.getParameter("announcementType");
-		AnnouncementDao announcementDao = new AnnouncementDao();
-		announcementDao.AddAnnouncement(userid, title, content, (commentallowed.equals("on") ? true : false), tags,
-				types);
+		if (request.getSession().getAttribute("token") != null) {
+			request.getSession().removeAttribute("token");
+
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			String userid = (String) request.getSession(true).getAttribute("userID");
+			String commentallowed = request.getParameter("commentAllowed");
+			String tags = request.getParameter("tags");
+			String types = request.getParameter("announcementType");
+			AnnouncementDao announcementDao = new AnnouncementDao();
+			announcementDao.AddAnnouncement(userid, title, content, (commentallowed.equals("on") ? true : false), tags,
+					types);
+		}
 		request.getRequestDispatcher("MyAnnouncementUI").forward(request, response);
 	}
 
