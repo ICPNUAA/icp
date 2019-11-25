@@ -260,7 +260,7 @@ position: absolute;
                   <li><a href="#news" class="chara1">信息类目</a></li>
                   <li><a href="#contact" class="chara1">近期热门</a></li>
                   <li><a href="/ICP/MyAnnouncementUI" class="chara1">我的通知</a></li>
-                  <li><a href="#myinfo" class="chara1">我的个人信息</a></li>
+					  <li><a href="${pageContext.request.contextPath}/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
                   <li><a href="#return" class="chara1">网站问题反馈</a></li>
 					</ul>
 		</div>

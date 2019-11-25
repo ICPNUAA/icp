@@ -48,6 +48,16 @@ public class DBUtil {
 			}
 		}
 	}
+	 public static void closeConn(Connection conn) {
+	        if (null != conn) {
+	            try {
+	                conn.close();
+	            } catch (SQLException e) {
+	                System.out.println("πÿ±’¡¨Ω” ß∞‹£°");
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	
 	public static void Close(ResultSet resultSet,Statement statement,Connection conn) {
 		if(resultSet!=null) {
