@@ -211,12 +211,11 @@
     <!--导航-->
     <div class="left3">
                 <ul>
-
-                  <li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
+					  <li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
                   <li><a href="#news" class="chara1">信息类目</a></li>
                   <li><a href="#contact" class="chara1">近期热门</a></li>
-                  <li><a href="/ICP/MyAnnouncementUI" class="chara1">我的通知</a></li>
-                  <li><a href="#myinfo" class="chara1">我的个人信息</a></li>
+                  <li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
+					  <li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
                   <li><a href="#return" class="chara1">网站问题反馈</a></li>
                 </ul>
     </div>

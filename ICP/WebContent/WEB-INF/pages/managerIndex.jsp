@@ -187,8 +187,6 @@ position: absolute;
 
         <div class="div1">
             <form >
-             <h5 style="font-size:17px;font-family:黑体; color:white; font-weight:5px;">登录时间：2018/11/22/17：12</h5>
-            
            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">管理员,欢迎你！</h5>   
         </form>
     </div>
