@@ -96,6 +96,12 @@ body{
                     </td>
                     
                 </tr>
+                <tr>
+                	 <td colspan="2" align="center" >
+                        <input type="button" name="back" id="back" value="返回首页" class="button" 
+                         onclick="window.location.href='${pageContext.request.contextPath}/Index.jsp'"/>
+                    </td>
+                </tr>
                 <h5 id="message" style="font-size:10px;font-family:宋体; color:red; font-weight:2px;">${message}</h5>
             </table>
         </form>

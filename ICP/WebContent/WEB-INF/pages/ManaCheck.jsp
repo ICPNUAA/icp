@@ -1,11 +1,11 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-	<title>管理员审核</title>
+	<title>发管理员审核</title>
 	 <style type="text/css">
 body{
 		background-color: #F0F8FF;
@@ -186,133 +186,50 @@ position: absolute;
         </div>
 
         <div class="div1">
-            <form >
+            <form >           
            <h5 style="font-size:23px;font-family:黑体; color:white; font-weight:5px;">管理员,欢迎你！</h5>   
         </form>
     </div>
  <form >
-    <table border="1px" align="center" margin-left="100px" >
-		${message}
+    <table border="1px" align="center">
+        <tr height="15px">
+            <td width="300px">
+                <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">姓名</h5>
+            </td>            
+            <td><h5 name="userID">${userID}</h5></td>
+        </tr>
+        <tr height="50px">
+            <td width="350px">
+                <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">校园卡图片</h5>
+            </td>
+            <td width="350px">
+	   ${cpMessage}
+</td>
+        </tr>
+        <tr height="15px">
+            <td width="350px">
+                <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">需验证身份</h5>
+            </td>
+             <td><h5 name="VeriTag">${VeriTags}</h5></td>
+        </tr>
+        <tr height="50px">
+            <td width="350px">
+                <h5 style="font-size:20px;font-family:黑体; color:black; font-weight:5px;">身份验证图</h5>
+            </td>
+            <td width="350px">${vpMessage}</td>
+        </tr>
+        <tr height="50px">
+            <td width="500px"></td>
+            <td width="50px">
+                <input type="submit" id="" value="通过验证" align="right" />
+                 <input type="submit" id="" value="拒绝验证"/>
+            </td>
+               
+          
+        </tr>
         </table>
     </form>
-<div style="height:px;margin-left:100px ;">
-<span id="spanFirst">第一页</span>
-<span id="spanPre">上一页</span>
-<span id="spanNext">下一页</span>
-<span id="spanLast">最后一页</span>
-第<span id="spanPageNum"></span>页/共
-<span id="spanTotalPage"></span>页
-</div>
-</div>
-<script type="text/javascript">
-var theTable = document.getElementById("table");
-var totalPage = document.getElementById("spanTotalPage");
-var pageNum = document.getElementById("spanPageNum");
-var spanPre = document.getElementById("spanPre");
-var spanNext = document.getElementById("spanNext");
-var spanFirst = document.getElementById("spanFirst");
-var spanLast = document.getElementById("spanLast");
-var numberRowsInTable = theTable.rows.length;
-var pageSize = 5;
-var page = 5;
-//下一页
-function next() {
-hideTable();
-currentRow = pageSize * page;
-maxRow = currentRow + pageSize;
-if ( maxRow > numberRowsInTable )
-maxRow = numberRowsInTable;
-for ( var i = currentRow; i< maxRow; i++ ) {
-theTable.rows[i].style.display = '';
-}
-page++;
-if ( maxRow == numberRowsInTable ){
-nextText();
-lastText();
-}
-showPage();
-preLink();
-firstLink();
-}
-//上一页
-function pre() {
-hideTable();
-page--;
-currentRow = pageSize * page;
-maxRow = currentRow - pageSize;
-if ( currentRow > numberRowsInTable )
-currentRow = numberRowsInTable;
-for ( var i = maxRow; i< currentRow; i++ ) {
-theTable.rows[i].style.display = '';
-}
-if ( maxRow == 0) {
-preText();
-firstText();
-}
-showPage();
-nextLink();
-lastLink();
-}
-//第一页
-function first() {
-hideTable();
-page = 1;
-for ( var i = 0; i<pageSize; i++ ) {
-theTable.rows[i].style.display = '';
-}
-showPage();
-preText();
-nextLink();
-lastLink();
-}
-//最后一页
-function last() {
-hideTable();
-page = pageCount();
-currentRow = pageSize * (page - );
-for ( var i = currentRow; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = '';
-}
-showPage();
-preLink();
-nextText();
-firstLink();
-}
-function hideTable() {
-for ( var i = ; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = 'none';
-}
-}
-function showPage() {
-pageNum.innerHTML = page;
-}
-//总共页数
-function pageCount() {
-var count = ;
-if ( numberRowsInTable%pageSize != ) count = ; 
-return parseInt(numberRowsInTable/pageSize) + count;
-}
-//显示链接
-function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }
-function preText() { spanPre.innerHTML = "上一页"; }
-function nextLink() { spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; }
-function nextText() { spanNext.innerHTML = "下一页"; }
-function firstLink() { spanFirst.innerHTML = "<a href='javascript:first();'>第一页</a>"; }
-function firstText() { spanFirst.innerHTML = "第一页"; }
-function lastLink() { spanLast.innerHTML = "<a href='javascript:last();'>最后一页</a>"; }
-function lastText() { spanLast.innerHTML = "最后一页"; }
-//隐藏表格
-function hide() {
-for ( var i = pageSize; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = 'none';
-}
-totalPage.innerHTML = pageCount();
-pageNum.innerHTML = '';
-nextLink();
-lastLink();
-}
-hide();
-</script>
+
 
 	</body>
 </html>

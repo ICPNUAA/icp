@@ -52,12 +52,10 @@ public class FillUser extends HttpServlet {
 		int i=0;
 		String Tags="";
 		request.setCharacterEncoding("UTF-8");
-		String args1[]= {""};
-		args1=request.getParameterValues("label1");
+		String args1[]=request.getParameterValues("label1");
 		if(!(args1==null))
 			Tags+="#"+args1[0];
-		String args2[]= {""};
-		args2=request.getParameterValues("label2");
+		String args2[]=request.getParameterValues("label2");
 		if(!(args2==null))
 			Tags+="#"+args2[0];
 		String args3[]= {""};
@@ -108,16 +106,28 @@ public class FillUser extends HttpServlet {
 		}catch (NumberFormatException e) {
 		    e.printStackTrace();
 		}
-		
 		String VeriTag=(String) request.getParameter("VeriTag");
-		UserDao userDao=new UserDao();
+		
 		HttpSession session = request.getSession();
-		String UserId=(String) session.getAttribute("userid");
+		String UserId=(String) session.getAttribute("userID");
 		//信息文本插入成功
+	     doPost(request, response);
+		String filePath=(String) session.getAttribute("filepath");
+		UserDao userDao=new UserDao();
+		 userDao.AddUserInfo(UserId, StuNumber, RealName, Tags,filePath);
+	     request.getRequestDispatcher("/WEB-INF/pages/UserCenter.jsp").forward(request, response);
+
+	}
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
 
 		// 检测是否为多媒体上传
         if (!ServletFileUpload.isMultipartContent(request)) {
-            // 如果不是则停止
+            // 如果不是则停止 
             PrintWriter writer = response.getWriter();
             writer.println("Error: 表单必须包含 enctype=multipart/form-data");
             writer.flush();
@@ -144,7 +154,7 @@ public class FillUser extends HttpServlet {
 
         // 构造临时路径来存储上传的文件
         // 这个路径相对当前应用的目录
-        String uploadPath = getServletContext().getRealPath("/") + File.separator + UPLOAD_DIRECTORY;
+        String uploadPath = getServletContext().getRealPath("/") + "/uploadfile" ;
         String filePath ="";
          
         // 如果目录不存在则创建
@@ -179,16 +189,10 @@ public class FillUser extends HttpServlet {
             request.setAttribute("message",
                     "错误信息: " + ex.getMessage());
         }
-        
-        userDao.AddUserInfo(UserId, StuNumber, RealName, Tags,filePath);
+        HttpSession session = request.getSession(true);
+    	session.setAttribute("filepath", uploadPath);
+    	doGet(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	
 
 }

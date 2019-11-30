@@ -8,26 +8,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import icp.bean.UserBean;
 
 import icp.bean.AnnouncementBean;
-import icp.dao.AnnouncementDao;
-
-@WebServlet("/LoginUI")
-public class LoginUI extends HttpServlet {
+public class OpenIndexUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public LoginUI() {
+       
+    public OpenIndexUI() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+		UserBean userBean=new UserBean();
+		HttpSession session = request.getSession();
+		String UserId=(String) session.getAttribute("userID");
+		session.setAttribute("userID", userBean.GetUserID());
+		request.getRequestDispatcher("/WEB-INF/pages/Index.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
