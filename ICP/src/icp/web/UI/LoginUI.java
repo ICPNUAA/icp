@@ -32,15 +32,4 @@ public class LoginUI extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public static String ShowAnnouncementByType(String _type) {
-		StringBuffer stringBuffer = new StringBuffer();
-		AnnouncementDao announcementDao = new AnnouncementDao();
-		List<AnnouncementBean> announcementBeans = announcementDao.GetAnnouncementsByType(_type);
-		for (AnnouncementBean bean : announcementBeans) {
-			stringBuffer.append("<div style=\"font-size:20px;height:30px\"><a style=\"width:500px\" href=\"ShowAnnouncementUI?announcementID="
-					+ bean.GetAnnouncementID() + "\">" + bean.GetAnnouncementTitle() + "</a></div>");
-		}
-		return stringBuffer.toString();
-	}
-
 }

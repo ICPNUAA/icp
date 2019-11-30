@@ -184,10 +184,9 @@ button {
 			<form action="${pageContext.request.contextPath}/AddAnnouncement">
 				<p
 					style="font-size: 18px; font-weight: 700px; color: white; position: relative; top: 10px; left: 5px">
-					输入标题： 
-					<input name="title" type="text" style="width: 300px; height: 20px"> 
-					选择版块： 
-					<select name="announcementType">
+					输入标题： <input name="title" type="text"
+						style="width: 300px; height: 20px"> 选择版块： <select
+						name="announcementType">
 						<option value="">
 						<option value="组织机构">组织机构</option>
 						<option value="体育赛事">体育赛事</option>
@@ -197,12 +196,10 @@ button {
 				</p>
 				<p
 					style="font-size: 18px; font-weight: 700px; color: white; position: relative; top: 10px; left: 5px">
-					添加标签： 
-					<select name="myTags">
+					添加标签： <select name="myTags">
 						<option value=""></option>
-						<%=AddAnnouncementUI.GetMyTags() %>
-					</select> 
-					<input name="tags" type="search"
+						<%=AddAnnouncementUI.GetMyTags()%>
+					</select> <input name="tags" type="search"
 						style="width: 300px; height: 20px">用#号分隔
 				</p>
 				<textarea id="editor_id" name="content"
@@ -211,7 +208,9 @@ button {
 					id="checkcomment" /> <label for="checkcomment">允许评论</label>
 				<button id="submit"
 					style="position: relative; top: 10px; left: 45%;">提交</button>
-					<%request.getSession().setAttribute("token", true); %>
+				<%
+					request.getSession().setAttribute("token", true);
+				%>
 			</form>
 		</div>
 	</div>
@@ -234,7 +233,6 @@ button {
 		<div class="left3">
 			<ul>
 				<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
-				<li><a href="#news" class="chara1">信息类目</a></li>
 				<li><a href="#contact" class="chara1">近期热门</a></li>
 				<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
 				<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
