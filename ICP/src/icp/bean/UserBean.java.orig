@@ -11,10 +11,11 @@ public class UserBean {
 	private String mRealName;
 	private String mUserTag;
 	private boolean mIsVerified;
-	private String mCampusCard;
-	private String mVeriTags;
-	private String mVeriPath;
+<<<<<<< HEAD
+	
+=======
 
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 	public String GetUserID() {
 		return mUserID;
 	}
@@ -22,6 +23,7 @@ public class UserBean {
 	public String GetPassword() {
 		return mPassword;
 	}
+<<<<<<< HEAD
 	public String GetStudentNumber() {
 		return mStudentNumber;
 	}
@@ -31,23 +33,13 @@ public class UserBean {
 	public String GetUserTag() {
 		return mUserTag;
 	}
-	public String GetVeriTags() {
-		return mVeriTags;
-	}
-	public String GetCampusCard() {
-		return mCampusCard;
-	}
-	public String GetVeriPath() {
-		return mVeriPath;
-	}
-	
 	public boolean GetIsAdmin() {
 		return mIsAdmin;
 	}
 	public boolean GetIsVerified() {
 		return mIsVerified;
 	}
-
+	
 	
 	
 	
@@ -56,13 +48,18 @@ public class UserBean {
 	
 	public void SetUserID(String _userid) {
 		this.mUserID=_userid;
-	}
-	
-	
-	public void SetPassword(String _password) {
-		this.mPassword=_password;
+=======
+
+	public void SetUserID(String _userid) {
+		this.mUserID = _userid;
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 	}
 
+	public void SetPassword(String _password) {
+		this.mPassword = _password;
+	}
+<<<<<<< HEAD
+	
 	public void SetStudentNumber(String _studentnumber) {
 		this.mStudentNumber=_studentnumber;
 	}
@@ -83,21 +80,15 @@ public class UserBean {
 		this.mIsVerified=_isverified;
 	}
 	
-	public void SetVeriTags(String _isveritags) {
-		this.mVeriTags=_isveritags;
-	}
-	public void SetCampusCard(String _iscampuscard) {
-		this.mCampusCard=_iscampuscard;
-	}
-	public void SetVeriPath(String _isveripath) {
-		this.mVeriPath=_isveripath;
-	}
 	
+=======
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 
 	public UserBean() {
 
 	}
-
+<<<<<<< HEAD
+	
 	public UserBean(String _userid,String _password,boolean _isadmin,
 			String _studentnumber,String _realname,String _usertag,
 			boolean _isverified) {
@@ -109,5 +100,12 @@ public class UserBean {
 		this.mRealName=_realname;
 		this.mUserTag=_usertag;
 		this.mIsVerified=_isverified;
+=======
+
+	public UserBean(String _userid, String _password) {
+		super();
+		this.mUserID = _userid;
+		this.mPassword = _password;
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 	}
 }

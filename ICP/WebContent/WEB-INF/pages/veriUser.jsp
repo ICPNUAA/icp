@@ -84,29 +84,21 @@
 
 <h1 style="font-size:45px;font-family:Courier;text-align:center;color:white;">官方身份验证</h1>
 
-        <form action="${pageContext.request.contextPath}/VeriUser" method="post" enctype="multipart/form-data">
-            <table border="0px" align="center">
+        <form action="${pageContext.request.contextPath}/VeriUser" enctype="multipart/form-data">
                                  
-                 <tr height="35px" align="center" >
-                    <td>待验证的Tag身份</td>
-                    <td>
-                       <input type="text" name="VeriTag" value="" class="text" placeholder="需验证的官方身份" />
-                    </td>                  
-                 </tr>
-                  <tr height="35px" align="center">
-                       <td>上传身份证明相关材料</td>
-                       <div style="position: relative;left: 41%">
-                           <input type="file" name="VeriImage" />
-                           <!--<input type="file" name="image" accept=""/>-->
-                           <!--<img src="" width="200px" height="200px" id="img-change">-->
-                       </div>
-                 </tr>
-                 
-                    <td colspan="2" align="center" >
-                        <input type="submit" id="" value="点击上传验证信息" class="login" style="margin-left:-25px;position: relative;top: 70px;"/>
-                    </td>
 
-            </table>
+	                   待验证的Tag身份              
+	        <input type="text" name="VeriTag" class="text" placeholder="需验证的官方身份" />
+		
+			上传身份证明相关材料
+	        <div style="position: relative;left: 41%">
+	               <input type="file" name="VeriImage" />
+	               <!--<input type="file" name="image" accept=""/>-->
+	              <!--<img src="" width="200px" height="200px" id="img-change">-->
+	        </div>
+
+ 			<input type="submit"  value="点击上传验证信息" class="login" style="margin-left:-25px;position: relative;top: 70px;"/>
+
         </form>
         
 

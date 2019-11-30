@@ -83,7 +83,7 @@
 
 <h1 style="font-size:45px;font-family:Courier;text-align:center;color:white;">fill up</h1>
 
-        <form action="${pageContext.request.contextPath}/FillUser" method="post" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/FillUser" enctype="multipart/form-data" encoding="multipart/form-data">
             <table border="0px" align="center">
                 <tr height="35px" align="center">
                  <td>选择你喜欢的标签</td>

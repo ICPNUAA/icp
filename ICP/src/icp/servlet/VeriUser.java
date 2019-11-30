@@ -53,9 +53,8 @@ public class VeriUser extends HttpServlet {
 		//从前端获数据
 		int i=0;
 		HttpSession session = request.getSession();
-		String UserId=(String) session.getAttribute("userid");
+		String UserId=(String) session.getAttribute("userID");
 		String VeriTag=request.getParameter("VeriTag");
-		VeriTag="老师";
 		request.setCharacterEncoding("UTF-8");
 		//信息文本
 		//开始上传图片

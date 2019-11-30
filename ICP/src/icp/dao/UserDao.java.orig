@@ -24,13 +24,22 @@ public class UserDao {
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
+<<<<<<< HEAD
+			statement=connection.createStatement();
+			resultSet=statement.executeQuery("select * from userinfo where userid='"+username+"'");
+			if(resultSet.next()) {
+				//Check userid succeed;
+				
+				if(resultSet.getString("userpassword").equalsIgnoreCase(password)) {
+					userBean=new UserBean();
+=======
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from userinfo where userid='" + username + "'");
 			if (resultSet.next()) {
 				// Check userid succeed;
-				
-				if(resultSet.getString("userpassword").equalsIgnoreCase(password)) {
+				if (resultSet.getString("userpassword").equals(password)) {
 					userBean = new UserBean();
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 					userBean.SetUserID(resultSet.getString("userid"));
 					userBean.SetPassword(resultSet.getString("userpassword"));
 				}
@@ -43,6 +52,7 @@ public class UserDao {
 		}
 		return userBean;
 	}
+<<<<<<< HEAD
 	
 	public String Register(String userid,String password,String password2)
 	{
@@ -176,7 +186,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		finally {
-			DBUtil.Close(resultSet, statement, connection);
+			DBUtil.Close(resultSet, statement, connection);;
 		}
 	}
 	
@@ -204,32 +214,7 @@ public class UserDao {
 		}
 		return list;
 	}
-	public List<UserBean> getCheckInfo(String UserID){
-		Connection connection=DBUtil.GetConnection();
-		List<UserBean> list=new ArrayList();
-		String sql="select CampusCard,VeriTags,VeriPath from userinfo where userID='"+UserID+"'";
-		Statement statement=null;
-		ResultSet resultSet=null;
-		try {
-			statement=connection.createStatement();
-			resultSet=statement.executeQuery(sql);
-			while(resultSet.next())
-			{
-				UserBean userBean=new UserBean();
-				userBean.SetCampusCard(resultSet.getString("CampusCard"));
-				userBean.SetVeriTags(resultSet.getString("VeriTags"));
-				userBean.SetVeriPath(resultSet.getString("VeriPath"));
-				list.add(userBean);
-			}
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		finally {
-			DBUtil.Close(resultSet, statement, connection);;
-		}
-		return list;
-		
-	}
-	
+=======
+
+>>>>>>> 178f56da1af73dd02f350b9f8ca5ce62c02aa7b9
 }
