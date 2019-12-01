@@ -29,18 +29,18 @@ public class DBUtil {
 		return connection;
 	}
 	
-	public static void Close(Statement state, Connection conn) {
-		if(state!=null) {
+	public static void Close(Statement statement, Connection connection) {
+		if(statement!=null) {
 			try {
-				state.close();
+				statement.close();
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		if(conn!=null) {
+		if(connection!=null) {
 			try {
-				conn.close();
+				connection.close();
 			}
 			catch (SQLException e) {
 				// TODO: handle exception
@@ -59,7 +59,7 @@ public class DBUtil {
 	        }
 	    }
 	
-	public static void Close(ResultSet resultSet,Statement statement,Connection conn) {
+	public static void Close(ResultSet resultSet,Statement statement,Connection connection) {
 		if(resultSet!=null) {
 			try {
 				resultSet.close();
@@ -76,9 +76,9 @@ public class DBUtil {
 				e.printStackTrace();
 			}
 		}
-		if(conn!=null) {
+		if(connection!=null) {
 			try {
-				conn.close();
+				connection.close();
 			}
 			catch (SQLException e) {
 				// TODO: handle exception

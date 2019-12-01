@@ -165,15 +165,19 @@ button {
 		<div class="right1">
 			<div
 				style="width: 40%; height: 40%; position: relative; left: 20%; top: 40%">
-				<form action="#" method="get" align="center">
-					<table border="0px">
+				<form action="/ICP/Search" method="get" align="center">
+					<table border="0px" class="location1">
 						<tr height="35px">
+							<td><select name="searchType">
+									<option value="通知">搜索通知</option>
+									<option value="标签">搜索标签</option>
+									<option value="用户">搜索用户</option>
+							</select></td>
 							<td width="400px"><input style="width: 300px; height: 25px;"
-								type="text" id="searchdiv" size="30px" placeholder="search" />
-							</td>
-							<td>
-								<button class="search" id="search">搜索</button>
-							</td>
+								type="text" id="searchdiv" size="30px" value="${keyWord}"
+								name="keyWord" /></td>
+							<td><input class="search" id="search" type="submit"
+								value="搜索" /></td>
 						</tr>
 					</table>
 				</form>
@@ -198,7 +202,7 @@ button {
 					style="font-size: 18px; font-weight: 700px; color: white; position: relative; top: 10px; left: 5px">
 					添加标签： <select name="myTags">
 						<option value=""></option>
-						<%=AddAnnouncementUI.GetMyTags()%>
+						<%=AddAnnouncementUI.GetTagsOptionByUserID(session.getAttribute("userID").toString())%>
 					</select> <input name="tags" type="search"
 						style="width: 300px; height: 20px">用#号分隔
 				</p>

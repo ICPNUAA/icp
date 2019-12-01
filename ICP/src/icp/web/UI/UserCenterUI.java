@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/RegisterUIServlet")
-public class RegisterUIServlet extends HttpServlet {
+@WebServlet("/UserCenterUI")
+public class UserCenterUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public RegisterUIServlet() {
+    public UserCenterUI() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/UserCenter.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

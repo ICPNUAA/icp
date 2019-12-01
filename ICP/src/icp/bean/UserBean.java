@@ -11,9 +11,6 @@ public class UserBean {
 	private String mRealName;
 	private String mUserTag;
 	private boolean mIsVerified;
-	private String mCampusCard;
-	private String mVeriTags;
-	private String mVeriPath;
 
 	public String GetUserID() {
 		return mUserID;
@@ -33,18 +30,6 @@ public class UserBean {
 
 	public String GetUserTag() {
 		return mUserTag;
-	}
-
-	public String GetVeriTags() {
-		return mVeriTags;
-	}
-
-	public String GetCampusCard() {
-		return mCampusCard;
-	}
-
-	public String GetVeriPath() {
-		return mVeriPath;
 	}
 
 	public boolean GetIsAdmin() {
@@ -81,18 +66,6 @@ public class UserBean {
 
 	public void SetIsVerified(boolean _isverified) {
 		this.mIsVerified = _isverified;
-	}
-
-	public void SetVeriTags(String _isveritags) {
-		this.mVeriTags = _isveritags;
-	}
-
-	public void SetCampusCard(String _iscampuscard) {
-		this.mCampusCard = _iscampuscard;
-	}
-
-	public void SetVeriPath(String _isveripath) {
-		this.mVeriPath = _isveripath;
 	}
 
 	public UserBean() {

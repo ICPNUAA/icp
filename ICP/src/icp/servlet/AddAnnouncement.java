@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import icp.dao.AnnouncementDao;
+import icp.dao.TagDao;
 
 /**
  * Servlet implementation class AddAnnouncement
@@ -38,7 +39,16 @@ public class AddAnnouncement extends HttpServlet {
 			String content = request.getParameter("content");
 			String userid = (String) request.getSession(true).getAttribute("userID");
 			String commentallowed = request.getParameter("commentAllowed");
-			String tags = request.getParameter("tags");
+			
+			//deal with tags name
+			String tags = "#" + request.getParameter("myTags");
+			String[] tagNames = request.getParameter("tags").split("#");
+			TagDao tagDao=new TagDao();
+			for (String name : tagNames) {
+				if(name.equals(""))
+					continue;
+				tags+="#"+tagDao.AddTag(name);
+			}
 			String types = request.getParameter("announcementType");
 			AnnouncementDao announcementDao = new AnnouncementDao();
 			announcementDao.AddAnnouncement(userid, title, content, (commentallowed.equals("on") ? true : false), tags,

@@ -1,11 +1,11 @@
-<%@page import="icp.web.UI.MyAnnouncementUI"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>我发布的通知</title>
+<title>待审核用户信息</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -67,13 +67,13 @@ li a:hover {
 	=1;
 }
 
-.input {
+input {
 	border: 1px #c0d8ef solid;
 	border-radius: 2px;
 	margin-left: 15px;
 }
 
-.button {
+button {
 	border: 1px #cccccc solid;
 	border-radius: 2px;
 }
@@ -144,12 +144,16 @@ li a:hover {
 }
 
 .divadd {
+	background-color: grey;
 	position: absolute;
 	left: 80%;
 	top: 15%;
+	height: 60px;
+	width: 110px;
 }
 </style>
 </head>
+
 <body>
 	<div>
 		<h1
@@ -171,43 +175,61 @@ li a:hover {
 			</tr>
 		</table>
 	</form>
-
 	<div class="location2">
 		<ul>
-			<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
-			<li><a href="#contact" class="chara1">近期热门</a></li>
-			<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
-			<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
-			<li><a href="#return" class="chara1">网站问题反馈</a></li>
+			<li><a href="/ICP/AdminCheckUsersUI">待审核用户信息</a></li>
+			<li><a href="/ICP/AdminCheckTagsUI">待审核标签</a></li>
+			<li><a href="/ICP/ManageUserUI">管理用户</a></li>
+			<li><a href="/ICP/ManageAnnouncementsUI">管理通知</a></li>
 		</ul>
 	</div>
 
 	<div class="div1">
 		<form>
 			<h5
-				style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;"><%=session.getAttribute("userID")%>，欢迎你！
-			</h5>
+				style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;">管理员,欢迎你！</h5>
 		</form>
 	</div>
-	<!-- 显示已发送通知，使用表格 -->
-	<div style="height: 600px; overflow-y: scroll">
-		<form style="position: relative; left: 50px">
-			<table border="0px" align="center">
-				<tr height="55px">
-					<td width="1000px">
-						<h5 style="font-size: 25px; font-family: 黑体; color: black; font-weight: 5px;">我已发布的通知</h5>
-					</td>
-				</tr>
-				<!-- 中间正文 -->
-				<%=MyAnnouncementUI.ShowMyAnnouncement(session.getAttribute("userID").toString())%>
-			</table>
-		</form>
-	</div>
-	<!-- 右上按钮 -->
-	<div class="divadd">
-		<form action="${pageContext.request.contextPath}/AddAnnouncementUI">
-			<input style="font-size: 17px; font-family: 黑体; color: black; font-weight: 5px;" value="+添加通知" type="submit">
-		</form>
-	</div>
+	<form>
+		<table border="1px" align="center">
+			<tr height="15px">
+				<td width="300px">
+					<h5
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">姓名</h5>
+				</td>
+				<td><h5 name="userID">${userID}</h5></td>
+			</tr>
+			<tr height="50px">
+				<td width="350px">
+					<h5
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">校园卡图片</h5>
+				</td>
+				<td width="350px">${cpMessage}</td>
+			</tr>
+			<tr height="15px">
+				<td width="350px">
+					<h5
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">需验证身份</h5>
+				</td>
+				<td><h5 name="VeriTag">${VeriTags}</h5></td>
+			</tr>
+			<tr height="50px">
+				<td width="350px">
+					<h5
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">身份验证图</h5>
+				</td>
+				<td width="350px">${vpMessage}</td>
+			</tr>
+			<tr height="50px">
+				<td width="500px"></td>
+				<td width="50px"><input type="submit" id="" value="通过验证"
+					align="right" /> <input type="submit" id="" value="拒绝验证" /></td>
+
+
+			</tr>
+		</table>
+	</form>
+
+
 </body>
 </html>

@@ -37,15 +37,19 @@ public class Login extends HttpServlet {
 		String userid = request.getParameter("username");
 		String password = request.getParameter("password");
 		UserDao userDao = new UserDao();
-		UserBean userBean = userDao.CheckLogin(userid, password);
-		if (userBean == null) {
+		int loginResult = userDao.CheckLogin(userid, password);
+		if (loginResult == 0) {
 			// login fail
 			request.getRequestDispatcher("LoginUI").forward(request, response);
-		} else {
-			// login succeed
+		} else if(loginResult == 1){
+			// login succeed: normal user
 			HttpSession session = request.getSession(true);
-			session.setAttribute("userID", userBean.GetUserID());
+			session.setAttribute("userID", userid);
 			request.getRequestDispatcher("IndexUI").forward(request, response);
+		}
+		else if(loginResult == 2){
+			// login succeed: administrator
+			request.getRequestDispatcher("AdminCheckUsersUI").forward(request, response);
 		}
 	}
 

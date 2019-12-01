@@ -133,15 +133,19 @@ button {
 		<div class="right1">
 			<div
 				style="width: 40%; height: 40%; position: relative; left: 20%; top: 40%">
-				<form action="#" method="get" align="center">
-					<table border="0px">
+				<form action="/ICP/Search" method="get" align="center">
+					<table border="0px" class="location1">
 						<tr height="35px">
+							<td><select name="searchType">
+									<option value="通知">搜索通知</option>
+									<option value="标签">搜索标签</option>
+									<option value="用户">搜索用户</option>
+							</select></td>
 							<td width="400px"><input style="width: 300px; height: 25px;"
-								type="text" id="searchdiv" size="30px" placeholder="search" />
-							</td>
-							<td>
-								<button class="search" id="search">搜索</button>
-							</td>
+								type="text" id="searchdiv" size="30px" value="${keyWord}"
+								name="keyWord" /></td>
+							<td><input class="search" id="search" type="submit"
+								value="搜索" /></td>
 						</tr>
 					</table>
 				</form>
@@ -157,9 +161,7 @@ button {
 								<div class="item-box  layer-photos-demo1 layer-photos-demo">
 									<h3>${announcementTitle}</h3>
 									<h5>
-										标签：
-										<span style="color:gold">${officialTags}</span>
-										<span>${normalTags}</span>
+										标签： <span style="color: gold">${officialTags}</span> <span>${normalTags}</span>
 									</h5>
 									<h5>
 										发布于：<span>${publishTime}</span>

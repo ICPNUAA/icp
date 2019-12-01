@@ -67,36 +67,24 @@ body{
         
         <form  method="post">
             <table border="0px" align="center">
-                <!-- 选项 -->
                 <tr height="35px">
                    <td colspan="2" align="center" >
                         <input type="button" name="FillStu" id="FillStu" value="验证学生身份" class="button" 
-                         onclick="window.location.href='${pageContext.request.contextPath}/FillUpUIServlet'"/>
+                         onclick="window.location.href='${pageContext.request.contextPath}/VerifyCampusCardUI'"/>
                     </td>
                  </tr>
-                <!-- 输入密码栏 -->
                 <tr height="35px">
                    <td colspan="2" align="center" >
-                        <input type="button" name="VeriStu" id="VeriStu" value="验证官方身份" class="button" 
-                         onclick="window.location.href='${pageContext.request.contextPath}/VeriUIServlet'"/>
+                        <input type="button" name="VeriStu" id="VeriStu" value="验证官方标签" class="button" 
+                         onclick="window.location.href='${pageContext.request.contextPath}/VerifyTagsUI'"/>
                     </td>
                  </tr>
-                <!-- 输入密码栏 -->
                 <tr height="35px">
                     <td colspan="2" align="center" >
-                        <input type="button" name="EditTag" id="EditTag" value="修改自定义标签" class="button" 
-                         onclick="window.location.href='${pageContext.request.contextPath}/FillUserInfo.jsp'"/>
+                        <input type="button" name="EditTag" id="EditTag" value="管理我的标签" class="button" 
+                         onclick="window.location.href='${pageContext.request.contextPath}/ManageMyTagsUI'"/>
                     </td>
                  </tr>
-               
-                <!--按钮-->
-                <tr>
-                    <td colspan="2" align="center" >
-                        <input type="button" id="" value="修改密码" class="login" style="margin-left:-25px"/>
-                    </td>
-                    
-                </tr>
-                <h5 id="message" style="font-size:10px;font-family:宋体; color:red; font-weight:2px;">${message}</h5>
             </table>
         </form>
         

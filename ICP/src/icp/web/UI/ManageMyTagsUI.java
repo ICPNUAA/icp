@@ -1,31 +1,27 @@
 package icp.web.UI;
 
 import java.io.IOException;
-import java.util.Vector;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.cj.Session;
-
-import icp.bean.UserBean;
+import icp.bean.TagBean;
 import icp.dao.TagDao;
 import icp.dao.UserDao;
 
 /**
- * Servlet implementation class AddAnnouncementUI
+ * Servlet implementation class ManageMyTagsUI
  */
-@WebServlet("/AddAnnouncementUI")
-public class AddAnnouncementUI extends HttpServlet {
+@WebServlet("/ManageMyTagsUI")
+public class ManageMyTagsUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddAnnouncementUI() {
+	public ManageMyTagsUI() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,7 +33,7 @@ public class AddAnnouncementUI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/pages/AddAnnouncement.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/ManageMyTags.jsp").forward(request, response);
 	}
 
 	/**
@@ -50,18 +46,20 @@ public class AddAnnouncementUI extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public static String GetTagsOptionByUserID(String _userID) {
-		StringBuffer resultStr = new StringBuffer();
+	public static String ShowMyTags(String _userID) {
 		UserDao userDao = new UserDao();
-		UserBean userBean = userDao.GetUserByID(_userID);
-		String[] userTags = userBean.GetUserTag().split("#");
-
 		TagDao tagDao = new TagDao();
-		for (String tagid : userTags) {
-			if (tagid.equals(""))
+		String[] tags = userDao.GetUserByID(_userID).GetUserTag().split("#");
+		StringBuffer resultStr = new StringBuffer();
+		for (String tagID : tags) {
+			if (tagID.equals(""))
 				continue;
-			resultStr.append("<option value=\"" + tagid + "\">" + tagDao.GetTagByID(tagid).GetTagName() + "</option>");
+			TagBean tagBean = tagDao.GetTagByID(tagID);
+			resultStr.append("<tr>\r\n" + "	<td><span style=\"color: " + (tagBean.GetTagType() ? "gold" : "black")
+					+ "\">" + tagBean.GetTagName() + "</span></td>\r\n" + "	<td><a href=\"/ICP/DeleteUserTag?tagID="
+					+ tagBean.GetTagID() + "\">É¾³ý±êÇ©</a></td>\r\n" + "</tr>");
 		}
 		return resultStr.toString();
 	}
+
 }

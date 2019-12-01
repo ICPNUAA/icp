@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
-encoding//WebContent/WEB-INF/pages/managerIndex.jsp=UTF-8
-encoding//WebContent/WEB-INF/pages/register.jsp=UTF-8
+encoding//WebContent/WEB-INF/pages/AdminCheckUsers.jsp=UTF-8
+encoding//WebContent/WEB-INF/pages/Register.jsp=UTF-8
+encoding//src/icp/servlet/Register.java=UTF-8

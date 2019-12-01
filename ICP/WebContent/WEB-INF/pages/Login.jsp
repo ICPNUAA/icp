@@ -238,26 +238,29 @@ button {
 		<h1
 			style="font-size: 45px; font-family: 黑体; color: black; font-weight: 5px;">NUAA信息分享</h1>
 	</div>
-	<form action="#" method="get" align="center">
+	<form action="/ICP/Search" method="get" align="center">
 		<table border="0px" class="location1">
 			<tr height="35px">
+				<td><select name="searchType">
+						<option value="通知">搜索通知</option>
+						<option value="标签">搜索标签</option>
+						<option value="用户">搜索用户</option>
+				</select></td>
 				<td width="400px"><input style="width: 300px; height: 25px;"
-					type="text" id="searchdiv" size="30px" placeholder="search" /></td>
-				<td>
-					<button class="search" id="search">搜索</button>
+					type="text" id="searchdiv" size="30px" value="${keyWord}"
+					name="keyWord" /></td>
+				<td><input class="search" id="search" type="submit" value="搜索" />
 				</td>
 			</tr>
-
-
 		</table>
 	</form>
 	<div class="location2">
 		<ul>
-			<li><a href="#home" class="chara1">主页</a></li>
-			<li><a href="#contact" class="chara1">近期热门</a></li>
-			<li><a href="#about" class="chara1">我发布的通知</a></li>
-			<li><a href="#about" class="chara1">我的个人信息</a></li>
-			<li><a href="#about" class="chara1">网站问题反馈</a></li>
+			<li><a href="#" class="chara1">主页</a></li>
+			<li><a href="#" class="chara1">近期热门</a></li>
+			<li><a href="#" class="chara1">我发布的通知</a></li>
+			<li><a href="#" class="chara1">我的个人信息</a></li>
+			<li><a href="#" class="chara1">网站问题反馈</a></li>
 		</ul>
 	</div>
 
@@ -266,10 +269,9 @@ button {
 			<input name="username" type="text" class="text"
 				placeholder="username" /> <input name="password" type="password"
 				class="text" placeholder="password" />
-			<td><input type="submit" name="button" value="登陆" /></td>
-			<td><input type="button" name="button" value="注册" /></td>
-			<td><h5 id="message">${message}</h5></td> <a href="">忘记密码</a>
-
+			<input type="submit" name="button" value="登陆" />
+			<a href="/ICP/RegisterUI">注册</a>
+			<a href="">忘记密码</a>
 		</form>
 	</div>
 	<div class="divcubeb1">

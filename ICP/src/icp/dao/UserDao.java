@@ -10,15 +10,12 @@ import icp.bean.UserBean;
 import icp.database.DBUtil;
 
 public class UserDao {
-	private Connection conn = null;
-
-	public void DaoImpl(Connection conn) {
-		this.conn = conn;
-	}
-
-	public UserBean CheckLogin(String username, String password) {
+	/*
+	 * Return 0: Login Fail Return 1: Normal User Return 2: Administrator
+	 */
+	public static int CheckLogin(String username, String password) {
 		Connection connection = DBUtil.GetConnection();
-		UserBean userBean = null;
+		int result = 0;
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -26,12 +23,39 @@ public class UserDao {
 			resultSet = statement.executeQuery("select * from userinfo where userid='" + username + "'");
 			if (resultSet.next()) {
 				// Check userid succeed;
-
 				if (resultSet.getString("userpassword").equalsIgnoreCase(password)) {
-					userBean = new UserBean();
-					userBean.SetUserID(resultSet.getString("userid"));
-					userBean.SetPassword(resultSet.getString("userpassword"));
+					if (resultSet.getBoolean("isAdmin"))
+						result = 2;
+					else
+						result = 1;
 				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return result;
+	}
+
+	public static UserBean GetUserByID(String _userID) {
+		Connection connection = DBUtil.GetConnection();
+		UserBean userBean = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select * from userinfo where userid='" + _userID + "'");
+			if (resultSet.next()) {
+				userBean = new UserBean();
+				userBean.SetUserID(resultSet.getString("userid"));
+				userBean.SetPassword(resultSet.getString("userpassword"));
+				userBean.SetIsAdmin(resultSet.getBoolean("isAdmin"));
+				userBean.SetStudentNumber(resultSet.getString("studentNumber"));
+				userBean.SetRealName(resultSet.getString("realName"));
+				userBean.SetIsVerified(resultSet.getBoolean("isVerified"));
+				userBean.SetUserTag(resultSet.getString("userTags"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -42,89 +66,131 @@ public class UserDao {
 		return userBean;
 	}
 
-	public String Register(String userid, String password, String password2) {
-		String sql;
-		String message = "";
+	public static boolean UpdateUser(UserBean _userBean) {
+		boolean result = false;
 		Connection connection = DBUtil.GetConnection();
-		UserBean userBean = null;
 		Statement statement = null;
-		ResultSet resultSet = null;
-		if (userid.equalsIgnoreCase(""))
-			message = "用户名不可为空！";
-		else if (password.equalsIgnoreCase(""))
-			message = "密码不可为空！";
-		else if (password2.equalsIgnoreCase(""))
-			message = "密码不可为空！";
-		else if (!password.equalsIgnoreCase(password2))
-			message = "二次输入的密码不同！";
-		else {
-			try {
-				statement = connection.createStatement();
-				resultSet = statement.executeQuery("select * from userinfo where userid='" + userid + "'");
-				if (resultSet.next()) {
-					// Check userid succeed;
-					message = "改用户名已被占用，请更改！";
-				}
 
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			} finally {
-				;
-			}
-		}
-
-		if (message.equalsIgnoreCase("")) { // TODO: 检查完毕，向数据库插入信息
-			try {
-				sql = "insert into userinfo values('" + userid + "','" + password + "','0',-1,null,null,0,null)";
-				statement.execute(sql);
-
-			} catch (Exception e) {
-
-				e.printStackTrace();
-
-			} finally {
-				DBUtil.Close(resultSet, statement, connection);
-			}
-		}
-		return message;
-
-	}
-
-//	public String OfferInfo()
-//	{
-
-//	}
-
-	public String[] Top10Tags() {
-		String sql = "select * from icpdb.tag order by useNum desc limit 10";
-		String message[];
-		message = new String[10];
-		Connection connection = DBUtil.GetConnection();
-		UserBean userBean = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-		int i = 0;
+		// check if userid exist
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			while (resultSet.next()) {
-				// Check userid succeed;
-				message[i] = resultSet.getString("tagName");
-				i++;
-			}
+			String sqlstr = "update userInfo set userPassword='" + _userBean.GetPassword() + "',isAdmin="
+					+ _userBean.GetIsAdmin() + ",studentNumber='" + _userBean.GetStudentNumber() + "',realName='"
+					+ _userBean.GetRealName() + "',isVerified=" + _userBean.GetIsVerified() + ",userTags='"
+					+ _userBean.GetUserTag() + "' where userID='" + _userBean.GetUserID() + "'";
+			statement.execute(sqlstr);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
 
+	public static List<UserBean> GetUserByLikeID(String _userID) {
+		Connection connection = DBUtil.GetConnection();
+		List<UserBean> userBeans = new ArrayList<UserBean>();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select * from userinfo where userid like '%" + _userID + "%'");
+			while (resultSet.next()) {
+				UserBean tempBean = new UserBean();
+				tempBean.SetUserID(resultSet.getString("userid"));
+				tempBean.SetPassword(resultSet.getString("userpassword"));
+				tempBean.SetIsAdmin(resultSet.getBoolean("isAdmin"));
+				tempBean.SetStudentNumber(resultSet.getString("studentNumber"));
+				tempBean.SetRealName(resultSet.getString("realName"));
+				tempBean.SetIsVerified(resultSet.getBoolean("isVerified"));
+				tempBean.SetUserTag(resultSet.getString("userTags"));
+				userBeans.add(tempBean);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			DBUtil.Close(resultSet, statement, connection);
-			;
 		}
-		return message;
+		return userBeans;
 	}
 
-	public void AddUserInfo(String UserID, int studentnumber, String realname, String UserTags, String filepath) {
+	public static List<UserBean> GetUserByTags(String _tagName) {
+		Connection connection = DBUtil.GetConnection();
+		List<UserBean> userBeans = new ArrayList<UserBean>();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select * from userinfo where userTags like '%" + _tagName + "%'");
+			while (resultSet.next()) {
+				UserBean tempBean = new UserBean();
+				tempBean.SetUserID(resultSet.getString("userid"));
+				tempBean.SetPassword(resultSet.getString("userpassword"));
+				tempBean.SetIsAdmin(resultSet.getBoolean("isAdmin"));
+				tempBean.SetStudentNumber(resultSet.getString("studentNumber"));
+				tempBean.SetRealName(resultSet.getString("realName"));
+				tempBean.SetIsVerified(resultSet.getBoolean("isVerified"));
+				tempBean.SetUserTag(resultSet.getString("userTags"));
+				userBeans.add(tempBean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return userBeans;
+	}
+
+	public static boolean Register(String userID, String password, String realName, String studentNumber) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		// check if userid exist
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select * from userinfo where userID='" + userID + "'");
+			if (resultSet.next()) {
+				result = false;
+			} else {
+				String sqlstr = "insert into userinfo values('" + userID + "','" + password + "',0,'" + studentNumber
+						+ "','" + realName + "',0,null)";
+				statement.execute(sqlstr);
+				result = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return result;
+	}
+
+	public static boolean AddCampusCardVerifyApply(String _userID, String _filePath) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "insert into userApply values('" + _userID + "','" + _filePath + "',0)";
+			statement.execute(sqlstr);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+
+	public static void AddUserInfo(String UserID, int studentnumber, String realname, String UserTags,
+			String filepath) {
 		String sql = "";
 		String message[];
 		message = new String[10];
@@ -150,7 +216,7 @@ public class UserDao {
 		}
 	}
 
-	public void VerifyUser(String UserID, String VeriTag, String filepath) {
+	public static void VerifyUser(String UserID, String VeriTag, String filepath) {
 		String sql = "";
 		Connection connection = DBUtil.GetConnection();
 		UserBean userBean = null;
@@ -171,10 +237,10 @@ public class UserDao {
 		}
 	}
 
-	public List<UserBean> getAllAppli() {
+	public static List<UserBean> getAllAppli() {
 		Connection connection = DBUtil.GetConnection();
 		List<UserBean> list = new ArrayList();
-		String sql = "select userID from userinfo where isVerified=-1";
+		String sql = "select * from userinfo where isVerified=0";
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -183,6 +249,8 @@ public class UserDao {
 			while (resultSet.next()) {
 				UserBean userBean = new UserBean();
 				userBean.SetUserID(resultSet.getString("userID"));
+				userBean.SetRealName(resultSet.getString("realName"));
+				userBean.SetStudentNumber(resultSet.getString("studentNumber"));
 				list.add(userBean);
 			}
 		} catch (Exception e) {
@@ -195,10 +263,10 @@ public class UserDao {
 		return list;
 	}
 
-	public List<UserBean> getCheckInfo(String UserID) {
+	public static List<UserBean> getCheckInfo(String _userID) {
 		Connection connection = DBUtil.GetConnection();
-		List<UserBean> list = new ArrayList();
-		String sql = "select CampusCard,VeriTags,VeriPath from userinfo where userID='" + UserID + "'";
+		List<UserBean> userBeans = new ArrayList();
+		String sql = "select * from userapply where userID='" + _userID + "'";
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -206,10 +274,7 @@ public class UserDao {
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				UserBean userBean = new UserBean();
-				userBean.SetCampusCard(resultSet.getString("CampusCard"));
-				userBean.SetVeriTags(resultSet.getString("VeriTags"));
-				userBean.SetVeriPath(resultSet.getString("VeriPath"));
-				list.add(userBean);
+				userBeans.add(userBean);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -218,6 +283,6 @@ public class UserDao {
 			DBUtil.Close(resultSet, statement, connection);
 			;
 		}
-		return list;
+		return userBeans;
 	}
 }

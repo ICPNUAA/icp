@@ -18,7 +18,7 @@ import icp.database.DBUtil;
 
 public class AnnouncementDao {
 
-	public boolean AddAnnouncement(String _userID, String _announcementTitle, String _announcementContent,
+	public static boolean AddAnnouncement(String _userID, String _announcementTitle, String _announcementContent,
 			boolean _commentAllowed, String _announcementTags, String _announcementTypes) {
 		String _announcementId = UUID.randomUUID().toString().substring(24);
 		Date _publishTime = new Date(System.currentTimeMillis());
@@ -45,7 +45,7 @@ public class AnnouncementDao {
 		return result;
 	}
 
-	public AnnouncementBean GetAnnouncementByID(String _announcementID) {
+	public static AnnouncementBean GetAnnouncementByID(String _announcementID) {
 		AnnouncementBean announcementBean = new AnnouncementBean();
 		announcementBean.SetAnnouncementID(_announcementID);
 
@@ -75,7 +75,7 @@ public class AnnouncementDao {
 		return announcementBean;
 	}
 
-	public List<AnnouncementBean> GetAnnouncementsByUserID(String _userid) {
+	public static List<AnnouncementBean> GetAnnouncementsByUserID(String _userid) {
 		List<AnnouncementBean> announcementBeans = new ArrayList<>();
 
 		Connection connection = DBUtil.GetConnection();
@@ -103,7 +103,7 @@ public class AnnouncementDao {
 		return announcementBeans;
 	}
 
-	public List<AnnouncementBean> GetAnnouncementsByType(String _type){
+	public static List<AnnouncementBean> GetAnnouncementsByType(String _type) {
 		List<AnnouncementBean> announcementBeans = new ArrayList<>();
 
 		Connection connection = DBUtil.GetConnection();
@@ -111,15 +111,15 @@ public class AnnouncementDao {
 		ResultSet resultSet = null;
 		try {
 			statement = connection.createStatement();
-			String strsql = "select * from announcement where announcementType='" + _type + "'";
+			String strsql = "select * from announcement where announcementType='" + _type + "' order by readAmount desc";
 			resultSet = statement.executeQuery(strsql);
 			while (resultSet.next()) {
 				// String anID=resultSet.getString("announcementID");
-				AnnouncementBean tempBean = new AnnouncementBean(resultSet.getString("announcementID"), resultSet.getString("userID"),
-						resultSet.getString("announcementTitle"), resultSet.getString("announcementContent"),
-						resultSet.getString("publishTime"), resultSet.getBoolean("commentAllowed"),
-						resultSet.getString("announcementTags"), resultSet.getString("announcementType"),
-						resultSet.getInt("readAmount"));
+				AnnouncementBean tempBean = new AnnouncementBean(resultSet.getString("announcementID"),
+						resultSet.getString("userID"), resultSet.getString("announcementTitle"),
+						resultSet.getString("announcementContent"), resultSet.getString("publishTime"),
+						resultSet.getBoolean("commentAllowed"), resultSet.getString("announcementTags"),
+						resultSet.getString("announcementType"), resultSet.getInt("readAmount"));
 				announcementBeans.add(tempBean);
 			}
 		} catch (Exception e) {
@@ -131,7 +131,63 @@ public class AnnouncementDao {
 		return announcementBeans;
 	}
 	
-	public boolean UpdateAnnouoncement(AnnouncementBean _announcementBean) {
+	public static List<AnnouncementBean> GetAnnouncementsByTitle(String _title){
+		List<AnnouncementBean> announcementBeans = new ArrayList<>();
+
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			String strsql = "select * from announcement where announcementTitle like '%" + _title + "%' order by readAmount desc";
+			resultSet = statement.executeQuery(strsql);
+			while (resultSet.next()) {
+				// String anID=resultSet.getString("announcementID");
+				AnnouncementBean tempBean = new AnnouncementBean(resultSet.getString("announcementID"),
+						resultSet.getString("userID"), resultSet.getString("announcementTitle"),
+						resultSet.getString("announcementContent"), resultSet.getString("publishTime"),
+						resultSet.getBoolean("commentAllowed"), resultSet.getString("announcementTags"),
+						resultSet.getString("announcementType"), resultSet.getInt("readAmount"));
+				announcementBeans.add(tempBean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return announcementBeans;
+	}
+	
+	public static List<AnnouncementBean> GetAnnouncementsByTag(String _tagID){
+		List<AnnouncementBean> announcementBeans = new ArrayList<>();
+
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			String strsql = "select * from announcement where announcementTags like '%" + _tagID + "%' order by readAmount desc";
+			resultSet = statement.executeQuery(strsql);
+			while (resultSet.next()) {
+				// String anID=resultSet.getString("announcementID");
+				AnnouncementBean tempBean = new AnnouncementBean(resultSet.getString("announcementID"),
+						resultSet.getString("userID"), resultSet.getString("announcementTitle"),
+						resultSet.getString("announcementContent"), resultSet.getString("publishTime"),
+						resultSet.getBoolean("commentAllowed"), resultSet.getString("announcementTags"),
+						resultSet.getString("announcementType"), resultSet.getInt("readAmount"));
+				announcementBeans.add(tempBean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.Close(resultSet, statement, connection);
+		}
+		return announcementBeans;
+	}
+
+	public static boolean UpdateAnnouoncement(AnnouncementBean _announcementBean) {
 		Date _publishTime = new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		_announcementBean.SetPublishTime(sdf.format(_publishTime));
@@ -159,7 +215,7 @@ public class AnnouncementDao {
 		return result;
 	}
 
-	public boolean DeleteAnnouncement(String _announcementID) {
+	public static boolean DeleteAnnouncement(String _announcementID) {
 		boolean result = false;
 		Connection connection = DBUtil.GetConnection();
 		Statement statement = null;
@@ -178,7 +234,7 @@ public class AnnouncementDao {
 		return result;
 	}
 
-	public boolean AddAnnouncementReadAmount(String _id, int _amount) {
+	public static boolean AddAnnouncementReadAmount(String _id, int _amount) {
 		boolean result = false;
 
 		Connection connection = DBUtil.GetConnection();

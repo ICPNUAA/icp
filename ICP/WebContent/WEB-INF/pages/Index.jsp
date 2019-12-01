@@ -238,17 +238,20 @@ button {
 		<h1
 			style="font-size: 45px; font-family: 黑体; color: black; font-weight: 5px;">NUAA信息分享</h1>
 	</div>
-	<form action="#" method="get" align="center">
+	<form action="/ICP/Search" method="get" align="center">
 		<table border="0px" class="location1">
 			<tr height="35px">
+				<td><select name="searchType">
+						<option value="通知">搜索通知</option>
+						<option value="标签">搜索标签</option>
+						<option value="用户">搜索用户</option>
+				</select></td>
 				<td width="400px"><input style="width: 300px; height: 25px;"
-					type="text" id="searchdiv" size="30px" placeholder="search" /></td>
-				<td>
-					<button class="search" id="search">搜索</button>
+					type="text" id="searchdiv" size="30px" placeholder="search"
+					name="keyWord" /></td>
+				<td><input class="search" id="search" type="submit" value="搜索" />
 				</td>
 			</tr>
-
-
 		</table>
 	</form>
 	<div class="location2">
@@ -256,7 +259,7 @@ button {
 			<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
 			<li><a href="#contact" class="chara1">近期热门</a></li>
 			<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
-			<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
+			<li><a href="/ICP/UserCenterUI" class="chara1">我的个人信息</a></li>
 			<li><a href="#return" class="chara1">网站问题反馈</a></li>
 		</ul>
 	</div>

@@ -1,11 +1,11 @@
-<%@page import="icp.web.UI.MyAnnouncementUI"%>
+<%@page import="icp.servlet.Search"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>我发布的通知</title>
+<title>标签搜索</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -144,9 +144,12 @@ li a:hover {
 }
 
 .divadd {
+	background-color: grey;
 	position: absolute;
 	left: 80%;
 	top: 15%;
+	height: 60px;
+	width: 110px;
 }
 </style>
 </head>
@@ -189,25 +192,22 @@ li a:hover {
 			</h5>
 		</form>
 	</div>
-	<!-- 显示已发送通知，使用表格 -->
-	<div style="height: 600px; overflow-y: scroll">
-		<form style="position: relative; left: 50px">
+	<!-- 显示通知，使用表格 -->
+	<form>
+		<div style="height: 600px; overflow-y: scroll">
 			<table border="0px" align="center">
 				<tr height="55px">
 					<td width="1000px">
-						<h5 style="font-size: 25px; font-family: 黑体; color: black; font-weight: 5px;">我已发布的通知</h5>
+						<h5
+							style="font-size: 25px; font-family: 黑体; color: black; font-weight: 5px;">搜索到的相关${searchType}</h5>
 					</td>
 				</tr>
 				<!-- 中间正文 -->
-				<%=MyAnnouncementUI.ShowMyAnnouncement(session.getAttribute("userID").toString())%>
+				<%=Search.ShowSearchResult(request.getAttribute("keyWord").toString(),
+					request.getAttribute("searchType").toString())%>
 			</table>
-		</form>
-	</div>
-	<!-- 右上按钮 -->
-	<div class="divadd">
-		<form action="${pageContext.request.contextPath}/AddAnnouncementUI">
-			<input style="font-size: 17px; font-family: 黑体; color: black; font-weight: 5px;" value="+添加通知" type="submit">
-		</form>
-	</div>
+		</div>
+	</form>
+
 </body>
 </html>
