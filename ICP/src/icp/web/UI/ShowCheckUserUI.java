@@ -20,43 +20,26 @@ import java.io.InputStream;
 @WebServlet("/ShowCheckUserUI")
 public class ShowCheckUserUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public ShowCheckUserUI() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-//		UserDao userDao=new UserDao();
-// 		String userID=request.getParameter("userID");
-// 		List<UserBean> list=userDao.getCheckInfo(userID);
-//
-//		String cpMessage=" InputStream in = getServletContext().getResourceAsStream(\r\n" + 
-//				"	            \""+list.get(0).GetCampusCard()+"/upload/111.jpg\");\r\n" + 
-//				"	    BufferedImage bfi = ImageIO.read(in);\r\n" + 
-//				"	    response.reset();" + 
-//				"	    response.setContentType(\"image/gif\");\r\n" + 
-//				"	    ImageIO.write(bfi, \"jpg\", response.getOutputStream());\r\n" + 
-//				"	    out.clear();\r\n" + 
-//				"	    out = pageContext.pushBody();";
-//		
-//		String vpMessage=" InputStream in = getServletContext().getResourceAsStream(\r\n" + 
-//				"	            \""+list.get(0).GetVeriPath()+"/upload/111.jpg\");\r\n" + 
-//				"	    BufferedImage bfi = ImageIO.read(in);\r\n" + 
-//				"	    response.reset();" + 
-//				"	    response.setContentType(\"image/gif\");\r\n" + 
-//				"	    ImageIO.write(bfi, \"jpg\", response.getOutputStream());\r\n" + 
-//				"	    out.clear();\r\n" + 
-//				"	    out = pageContext.pushBody();";
-//		//获取图片path并显示在jsp上
-//		request.setAttribute("cpMessage", cpMessage);
-//		request.setAttribute("VeriTags", list.get(0).GetVeriTags());
-//		request.setAttribute("vpMessage",list.get(0).GetVeriPath());
-		request.getRequestDispatcher("/WEB-INF/pages/ManaCheck.jsp").forward(request, response);
+	public ShowCheckUserUI() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String userID = request.getParameter("userID");
+		UserBean userBean = UserDao.GetUserByID(userID);
+		String imgPath = UserDao.GetCampusCardVerifyApply(userID).GetCampusCardPath();
+		request.setAttribute("userID", userID);
+		request.setAttribute("studentNumber", userBean.GetStudentNumber());
+		request.setAttribute("realName", userBean.GetRealName());
+		request.setAttribute("campusCardPath", imgPath);
+		request.getRequestDispatcher("/WEB-INF/pages/ShowCheckUser.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

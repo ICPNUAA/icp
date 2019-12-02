@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理员审核</title>
+<title>审核用户</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -160,28 +160,12 @@ button {
 		<h1
 			style="font-size: 45px; font-family: 黑体; color: black; font-weight: 5px;">NUAA信息分享</h1>
 	</div>
-	<form action="/ICP/Search" method="get" align="center">
-		<table border="0px" class="location1">
-			<tr height="35px">
-				<td><select name="searchType">
-						<option value="通知">搜索通知</option>
-						<option value="标签">搜索标签</option>
-						<option value="用户">搜索用户</option>
-				</select></td>
-				<td width="400px"><input style="width: 300px; height: 25px;"
-					type="text" id="searchdiv" size="30px" value="${keyWord}"
-					name="keyWord" /></td>
-				<td><input class="search" id="search" type="submit" value="搜索" />
-				</td>
-			</tr>
-		</table>
-	</form>
 	<div class="location2">
 		<ul>
-			<li><a href="/ICP/AdminCheckUsersUI">待审核用户信息</a></li>
+			<li><a href="/ICP/AdminCheckUsersUI">待审核用户</a></li>
 			<li><a href="/ICP/AdminCheckTagsUI">待审核标签</a></li>
-			<li><a href="/ICP/ManageUserUI">管理用户</a></li>
-			<li><a href="/ICP/ManageAnnouncementsUI">管理通知</a></li>
+			<li><a href="/ICP/AdminManageUserUI">管理用户</a></li>
+			<li><a href="/ICP/AdminManageAnnouncementUI">管理通知</a></li>
 		</ul>
 	</div>
 
@@ -191,7 +175,7 @@ button {
 				style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;">管理员,欢迎你！</h5>
 		</form>
 	</div>
-	
+
 	<div style="height: 600px; overflow-y: scroll">
 		<form style="position: relative; left: 50px">
 			<table border="1px" align="center">
@@ -199,130 +183,13 @@ button {
 					<td width="20%">
 						<h3 style="font-size: 20px; font-weight: 5px;">待审核的用户</h3>
 					</td>
-					<td width="20%">
-						<h3 style="font-size: 20px; font-weight: 5px;">真实姓名</h3>
-					</td>
-					<td width="20%">
-						<h3 style="font-size: 20px; font-weight: 5px;">学号</h3>
-					</td>
-					<td width="10%">
-					</td>
+					<td width="10%"></td>
 				</tr>
 				<!-- 中间正文 -->
 				<%=AdminCheckUsersUI.ShowToBeVeriedList()%>
 			</table>
 		</form>
 	</div>
-	
-	<script type="text/javascript">
-var theTable = document.getElementById("table");
-var totalPage = document.getElementById("spanTotalPage");
-var pageNum = document.getElementById("spanPageNum");
-var spanPre = document.getElementById("spanPre");
-var spanNext = document.getElementById("spanNext");
-var spanFirst = document.getElementById("spanFirst");
-var spanLast = document.getElementById("spanLast");
-var numberRowsInTable = theTable.rows.length;
-var pageSize = 5;
-var page = 5;
-//下一页
-function next() {
-hideTable();
-currentRow = pageSize * page;
-maxRow = currentRow + pageSize;
-if ( maxRow > numberRowsInTable )
-maxRow = numberRowsInTable;
-for ( var i = currentRow; i< maxRow; i++ ) {
-theTable.rows[i].style.display = '';
-}
-page++;
-if ( maxRow == numberRowsInTable ){
-nextText();
-lastText();
-}
-showPage();
-preLink();
-firstLink();
-}
-//上一页
-function pre() {
-hideTable();
-page--;
-currentRow = pageSize * page;
-maxRow = currentRow - pageSize;
-if ( currentRow > numberRowsInTable )
-currentRow = numberRowsInTable;
-for ( var i = maxRow; i< currentRow; i++ ) {
-theTable.rows[i].style.display = '';
-}
-if ( maxRow == 0) {
-preText();
-firstText();
-}
-showPage();
-nextLink();
-lastLink();
-}
-//第一页
-function first() {
-hideTable();
-page = 1;
-for ( var i = 0; i<pageSize; i++ ) {
-theTable.rows[i].style.display = '';
-}
-showPage();
-preText();
-nextLink();
-lastLink();
-}
-//最后一页
-function last() {
-hideTable();
-page = pageCount();
-currentRow = pageSize * (page - );
-for ( var i = currentRow; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = '';
-}
-showPage();
-preLink();
-nextText();
-firstLink();
-}
-function hideTable() {
-for ( var i = ; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = 'none';
-}
-}
-function showPage() {
-pageNum.innerHTML = page;
-}
-//总共页数
-function pageCount() {
-var count = ;
-if ( numberRowsInTable%pageSize != ) count = ; 
-return parseInt(numberRowsInTable/pageSize) + count;
-}
-//显示链接
-function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }
-function preText() { spanPre.innerHTML = "上一页"; }
-function nextLink() { spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; }
-function nextText() { spanNext.innerHTML = "下一页"; }
-function firstLink() { spanFirst.innerHTML = "<a href='javascript:first();'>第一页</a>"; }
-function firstText() { spanFirst.innerHTML = "第一页"; }
-function lastLink() { spanLast.innerHTML = "<a href='javascript:last();'>最后一页</a>"; }
-function lastText() { spanLast.innerHTML = "最后一页"; }
-//隐藏表格
-function hide() {
-for ( var i = pageSize; i<numberRowsInTable; i++ ) {
-theTable.rows[i].style.display = 'none';
-}
-totalPage.innerHTML = pageCount();
-pageNum.innerHTML = '';
-nextLink();
-lastLink();
-}
-hide();
-</script>
 
 </body>
 </html>

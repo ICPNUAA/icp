@@ -111,7 +111,7 @@ public class AnnouncementDao {
 		ResultSet resultSet = null;
 		try {
 			statement = connection.createStatement();
-			String strsql = "select * from announcement where announcementType='" + _type + "' order by readAmount desc";
+			String strsql = "select * from announcement where announcementType='" + _type + "' order by readAmount desc limit 50";
 			resultSet = statement.executeQuery(strsql);
 			while (resultSet.next()) {
 				// String anID=resultSet.getString("announcementID");

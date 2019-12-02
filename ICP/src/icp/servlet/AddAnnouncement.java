@@ -32,6 +32,14 @@ public class AddAnnouncement extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(request.getSession().getAttribute("userID")==null) {
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write("<script language=javascript>");
+			response.getWriter().write("alert('ÇëÏÈµÇÂ¼£¡');");
+			response.getWriter().write("location.href='/ICP/LoginUI';");
+			response.getWriter().write("</script>");
+			return;
+		}
 		if (request.getSession().getAttribute("token") != null) {
 			request.getSession().removeAttribute("token");
 
@@ -43,15 +51,13 @@ public class AddAnnouncement extends HttpServlet {
 			//deal with tags name
 			String tags = "#" + request.getParameter("myTags");
 			String[] tagNames = request.getParameter("tags").split("#");
-			TagDao tagDao=new TagDao();
 			for (String name : tagNames) {
 				if(name.equals(""))
 					continue;
-				tags+="#"+tagDao.AddTag(name);
+				tags+="#"+TagDao.AddTag(name);
 			}
 			String types = request.getParameter("announcementType");
-			AnnouncementDao announcementDao = new AnnouncementDao();
-			announcementDao.AddAnnouncement(userid, title, content, (commentallowed.equals("on") ? true : false), tags,
+			AnnouncementDao.AddAnnouncement(userid, title, content, (commentallowed.equals("on") ? true : false), tags,
 					types);
 		}
 		request.getRequestDispatcher("MyAnnouncementUI").forward(request, response);

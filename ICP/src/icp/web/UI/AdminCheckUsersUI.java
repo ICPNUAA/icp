@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import icp.bean.UserApplyBean;
 import icp.bean.UserBean;
 import icp.dao.UserDao;
 import icp.database.DBUtil;
@@ -35,22 +36,15 @@ public class AdminCheckUsersUI extends HttpServlet {
 
 	public static String ShowToBeVeriedList() {
 		StringBuffer resultStr = new StringBuffer();
-		UserDao userDao = new UserDao();
-		List<UserBean> list = userDao.getAllAppli();
-		for (UserBean userBean : list) {
+		List<UserApplyBean> list = UserDao.getAllUserApply();
+		for (UserApplyBean userBean : list) {
 			resultStr.append(
 					"<tr height=\"50px\">\r\n" + 
 					"	<td width=\"20%\">\r\n" + 
 					userBean.GetUserID() + 
 					"	</td>\r\n" + 
-					"	<td width=\"20%\">\r\n" + 
-					userBean.GetRealName() + 
-					"	</td>\r\n" + 
-					"	<td width=\"20%\">\r\n" + 
-					userBean.GetStudentNumber() + 
-					"	</td>\r\n" + 
 					"	<td width=\"10%\">\r\n" + 
-					"		<a href=\"/ICP/ManaCheckUI?userID="+userBean.GetUserID()+"\">查看详细信息</a>\r\n" + 
+					"		<a href=\"/ICP/ShowCheckUserUI?userID="+userBean.GetUserID()+"\">查看详细信息</a>\r\n" + 
 					"	</td>\r\n" + 
 					"</tr>"
 					);

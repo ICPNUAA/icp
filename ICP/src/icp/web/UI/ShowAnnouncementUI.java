@@ -41,11 +41,10 @@ public class ShowAnnouncementUI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		AnnouncementDao announcementDao = new AnnouncementDao();
 		mAnnouncementID = (String) request.getParameter("announcementID");
-		AnnouncementBean announcementBean = announcementDao.GetAnnouncementByID(mAnnouncementID);
+		AnnouncementBean announcementBean = AnnouncementDao.GetAnnouncementByID(mAnnouncementID);
 		announcementBean.SetReadAmount(announcementBean.GetReadAmount() + 1);
-		announcementDao.AddAnnouncementReadAmount(mAnnouncementID, announcementBean.GetReadAmount());
+		AnnouncementDao.AddAnnouncementReadAmount(mAnnouncementID, announcementBean.GetReadAmount());
 		request.setAttribute("announcementTitle", announcementBean.GetAnnouncementTitle());
 		request.setAttribute("announcementContent", announcementBean.GetAnnouncementContent());
 		int readAmount = announcementBean.GetReadAmount();
@@ -57,14 +56,13 @@ public class ShowAnnouncementUI extends HttpServlet {
 
 		// show tags
 		if (!announcementBean.GetAnnouncementTags().equals("")) {
-			TagDao tagDao = new TagDao();
 			String[] tagsID = announcementBean.GetAnnouncementTags().split("#");
 			StringBuffer officialTags = new StringBuffer();
 			StringBuffer normalTags = new StringBuffer();
 			for (String tagID : tagsID) {
 				if (tagID.equals(""))
 					continue;
-				TagBean bean = tagDao.GetTagByID(tagID);
+				TagBean bean = TagDao.GetTagByID(tagID);
 				if (bean.GetTagType()) {
 					officialTags.append("#" + bean.GetTagName() + " ");
 				} else {

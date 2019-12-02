@@ -34,125 +34,109 @@ import icp.dao.UserDao;
 @WebServlet("/VerifyCampusCard")
 public class VerifyCampusCard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-    // 上传文件存储目录
-    private static final String UPLOAD_DIRECTORY = "uploadfile";
- 
-    // 上传配置
-    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
-   
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public VerifyCampusCard() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	// 上传文件存储目录
+	private static final String UPLOAD_DIRECTORY = "uploadfile";
+
+	// 上传配置
+	private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3; // 3MB
+	private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public VerifyCampusCard() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String UserId=(String) session.getAttribute("userID");
-		String newPath="";
-		try{
-			request.setCharacterEncoding("UTF-8");
-			String storePath=getServletContext().getRealPath("/images");
-			DiskFileItemFactory factory=new DiskFileItemFactory();
-			//设置临时文件的存放路径
-			factory.setRepository(new File(getServletContext().getRealPath("/temp")));
-			ServletFileUpload upload=new ServletFileUpload(factory);
-			upload.setProgressListener(new ProgressListener() {
-			//pBytesRead:已读字节数
-			//pContentLength:文件大小   字节总长度
-			//pItems:  FileItem 文件的索引
-			public void update(long pBytesRead, long pContentLength, int pItems) {
-			////XMLHttpServletRequest:js的对象
-			// //把pBytesRead/pContentLength*100，返回到界面上：XML或JSON(AJAX)
-			System.out.println("已读"+pBytesRead+",总大小:"+pContentLength+",第几项:"+pItems
-			+"!!!上传进度="+(pBytesRead/pContentLength*100)+"%");
-			System.out.println(pBytesRead/pContentLength);
-			}
-			});
-			//设置单个文件的大小
-			upload.setFileSizeMax(6*1024*1024);
-			upload.setSizeMax(20*1024*1024);
+		String UserId = (String) session.getAttribute("userID");
+		// 配置上传参数
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+		factory.setSizeThreshold(MEMORY_THRESHOLD);
+		// 设置临时存储目录
+		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+		ServletFileUpload upload = new ServletFileUpload(factory);
 
-			boolean isMultipart=ServletFileUpload.isMultipartContent(request);
-			if(isMultipart){
-				List<FileItem> items=upload.parseRequest(request);
-				for(FileItem item:items){
-				if(item.isFormField()){
-					String fileName=item.getFieldName();
-					String fileValue=item.getString("UTF-8");
-					System.out.println(fileName+"="+fileValue);
-				}else{
-					String mimeType=item.getContentType();
-					if(mimeType.startsWith("/image")){
-						InputStream in=item.getInputStream();//文件内容的输入流
-							String fileName=item.getName();//上传文件的文件名
-						if(fileName==null&&"".equals(fileName)){
-							continue;
-						}
-						fileName=fileName.substring(fileName.lastIndexOf("\\")+1);//原来的文件名
-						fileName=UUID.randomUUID().toString()+"_"+fileName;//UUID.randomUUID()后的文件名
-						System.out.println(request.getRemoteAddr()+"上传了"+fileName);
-			
-						newPath=makeDir(storePath,fileName);
-						OutputStream out=new FileOutputStream(newPath+"\\"+fileName);
-			
-						int len=-1;
-						byte []b=new byte[1024];
-						while((len=in.read(b))!=-1){
-							out.write(b, 0, len);
-						}
-						in.close();
-						out.close();
-						item.delete();//删除临时文件
-					}
+		// 设置最大文件上传值
+		upload.setFileSizeMax(MAX_FILE_SIZE);
+
+		// 设置最大请求值 (包含文件和表单数据)
+		upload.setSizeMax(MAX_REQUEST_SIZE);
+
+		// 中文处理
+		upload.setHeaderEncoding("UTF-8");
+
+		// 构造临时路径来存储上传的文件
+		// 这个路径相对当前应用的目录
+		// String uploadPath = getServletContext().getRealPath("/") + File.separator +
+		// UPLOAD_DIRECTORY;
+		String uploadPath = getServletContext().getRealPath("/images");
+		String filePath = "";
+
+		// 如果目录不存在则创建
+		File uploadDir = new File(uploadPath);
+		if (!uploadDir.exists()) {
+			uploadDir.mkdir();
+		}
+
+		// 检测是否为多媒体上传
+		if (!(ServletFileUpload.isMultipartContent(request))) {
+			// 如果不是则停止
+			PrintWriter writer = response.getWriter();
+			writer.println("Error: 表单必须包含 enctype=multipart/form-data");
+			writer.flush();
+			return;
+		}
+
+		try {
+			// 解析请求的内容提取文件数据
+			@SuppressWarnings("unchecked")
+			List<FileItem> formItems = upload.parseRequest(request);
+
+			if (formItems != null && formItems.size() > 0) {
+				// 迭代表单数据
+				for (FileItem item : formItems) {
+					// 处理不在表单中的字段
+					if (!item.isFormField()) {
+						String fileName = new File(item.getName()).getName();
+						filePath = uploadPath + File.separator + fileName;
+						File storeFile = new File(filePath);
+						// 在控制台输出文件的上传路径
+						System.out.println("文件路径：" + filePath);
+						// 保存文件到硬盘
+						item.write(storeFile);
+						request.setAttribute("message", "文件上传成功!");
 					}
 				}
 			}
-			}catch(FileSizeLimitExceededException e){
-			System.out.println("单个文件不能超过6M");
+		} catch (Exception ex) {
+			request.setAttribute("message", "错误信息: " + ex.getMessage());
+		}
+		int index = filePath.indexOf("\\ICP");
+		filePath = filePath.substring(index);
+		String filepath = filePath.replaceAll("\\\\", "\\\\\\\\");
+		UserDao.AddCampusCardVerifyApply(UserId, filepath);
 
-			}catch(FileUploadBase.SizeLimitExceededException e){
-			System.out.println("总文件大小不能超过6M");
-
-			}
-
-			catch(Exception e){
-			e.printStackTrace();
-			throw new RuntimeException(e);
-
-			}
-        
-        UserDao.AddCampusCardVerifyApply(UserId, newPath);
-        request.getRequestDispatcher("VerifyCampusCardUI").forward(request, response);
+		request.getRequestDispatcher("UserCenterUI").forward(request, response);
 	}
-	
-	private String makeDir(String storePath, String fileName) {
-		int hashCode=fileName.hashCode();
-		int dir1=hashCode & 0xf;
-		int dir2=(hashCode& 0xf0)>>4;
-		String newPath=storePath+"\\"+dir1+"\\"+dir2;
-		File file=new File(newPath);
-		if(!file.exists()){
-		file.mkdir();
-		}
 
-		return newPath;
-		}
-	
-		
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

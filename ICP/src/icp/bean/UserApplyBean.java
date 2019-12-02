@@ -5,6 +5,10 @@ public class UserApplyBean {
 	private String mCampusCardPath;
 	private boolean mResult;
 	
+	public UserApplyBean() {
+		
+	}
+	
 	public UserApplyBean(String _userID,String _campusCardPath,boolean _result) {
 		mUserID=_userID;
 		mCampusCardPath=_campusCardPath;

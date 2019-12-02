@@ -164,7 +164,7 @@ li a:hover {
 						<option value="用户">搜索用户</option>
 				</select></td>
 				<td width="400px"><input style="width: 300px; height: 25px;"
-					type="text" id="searchdiv" size="30px" value="${keyWord}"
+					type="text" id="searchdiv" size="30px"
 					name="keyWord" /></td>
 				<td><input class="search" id="search" type="submit" value="搜索" />
 				</td>
@@ -175,10 +175,8 @@ li a:hover {
 	<div class="location2">
 		<ul>
 			<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
-			<li><a href="#contact" class="chara1">近期热门</a></li>
 			<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
 			<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
-			<li><a href="#return" class="chara1">网站问题反馈</a></li>
 		</ul>
 	</div>
 

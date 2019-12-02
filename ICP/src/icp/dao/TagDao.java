@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import icp.bean.TagApplyBean;
 import icp.bean.TagBean;
 import icp.database.DBUtil;
 
@@ -66,6 +67,87 @@ public class TagDao {
 			DBUtil.Close(resultSet, statement, connection);
 		}
 		return tagID;
+	}
+
+	public static boolean AddTagApply(String _userID, String _tagID, String _path) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "insert into tagapply values('" + _tagID + "','" + _userID + "','" + _path + "',0)";
+			statement.execute(sqlstr);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+	
+	public static boolean DeleteTagApply(String _tagID) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "delete from tagapply where tagID='" + _tagID + "'";
+			statement.execute(sqlstr);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+
+	public static List<TagApplyBean> GetAllTagApply() {
+		List<TagApplyBean> tagApplyBeans = new ArrayList<>();
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "select * from tagapply";
+			resultSet = statement.executeQuery(sqlstr);
+			while (resultSet.next()) {
+				String tagID = resultSet.getString("tagID");
+				String userID = resultSet.getString("userID");
+				String imgPath = resultSet.getString("verifyPath");
+				TagApplyBean bean = new TagApplyBean(tagID, userID, imgPath, false);
+				tagApplyBeans.add(bean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return tagApplyBeans;
+	}
+
+	public static TagApplyBean GetTagApply(String _tagID) {
+		TagApplyBean tagApplyBean = null;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "select * from tagapply where tagID='" + _tagID + "'";
+			resultSet = statement.executeQuery(sqlstr);
+			while (resultSet.next()) {
+				String tagID = resultSet.getString("tagID");
+				String userID = resultSet.getString("userID");
+				String imgPath = resultSet.getString("verifyPath");
+				tagApplyBean = new TagApplyBean(tagID, userID, imgPath, false);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return tagApplyBean;
 	}
 
 	public static boolean VeriTagSuccess(String _tagID) {

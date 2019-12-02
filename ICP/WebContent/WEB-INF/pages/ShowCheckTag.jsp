@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>待审核用户信息</title>
+<title>待审核标签</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -177,9 +177,9 @@ button {
 			<tr height="15px">
 				<td width="150px">
 					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">用户ID</h5>
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">标签名</h5>
 				</td>
-				<td><h5>${userID}</h5></td>
+				<td><h5>${tagName}</h5></td>
 			</tr>
 			<tr height="15px">
 				<td width="100px">
@@ -198,15 +198,15 @@ button {
 			<tr height="50px">
 				<td>
 					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">校园卡图片</h5>
+						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">认证材料</h5>
 				</td>
-				<td width="350px"><img src="${campusCardPath}"></td>
+				<td width="350px"><img src="${verifyPath}"></td>
 			</tr>
 			<tr height="50px">
 				<td></td>
 				<td width="50px"><span><a
-						href="/ICP/AgreeUserApply?userID=${userID}">审核通过</a></span> <span><a
-						href="/ICP/DeleteUserApply?userID=${userID}">拒绝申请</a></span></td>
+						href="/ICP/AgreeTagApply?tagID=${tagID}">审核通过</a></span> <span><a
+						href="/ICP/DeleteTagApply?tagID=${tagID}">拒绝申请</a></span></td>
 			</tr>
 		</table>
 	</div>

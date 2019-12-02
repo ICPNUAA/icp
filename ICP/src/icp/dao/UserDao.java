@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import icp.bean.UserApplyBean;
 import icp.bean.UserBean;
 import icp.database.DBUtil;
 
@@ -189,6 +190,43 @@ public class UserDao {
 		return result;
 	}
 
+	public static boolean DeleteCampusCardVerifyApply(String _userID) {
+		boolean result = false;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			String sqlstr = "delete from userApply where userID='" + _userID + "'";
+			statement.execute(sqlstr);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return result;
+	}
+
+	public static UserApplyBean GetCampusCardVerifyApply(String _userID) {
+		UserApplyBean applyBean = null;
+		Connection connection = DBUtil.GetConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select * from userapply where userID='" + _userID + "'");
+			if (resultSet.next()) {
+				String cardPath = resultSet.getString("campusCardPath");
+				applyBean = new UserApplyBean(_userID, cardPath, false);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBUtil.Close(statement, connection);
+		}
+		return applyBean;
+	}
+
 	public static void AddUserInfo(String UserID, int studentnumber, String realname, String UserTags,
 			String filepath) {
 		String sql = "";
@@ -216,42 +254,42 @@ public class UserDao {
 		}
 	}
 
-	public static void VerifyUser(String UserID, String VeriTag, String filepath) {
+	public static boolean VerifyUser(String UserID) {
+		boolean result = false;
 		String sql = "";
 		Connection connection = DBUtil.GetConnection();
-		UserBean userBean = null;
 		Statement statement = null;
-		ResultSet resultSet = null;
 		try {
-			sql = "update icpdb.userinfo set `VeriTags`='" + VeriTag + "',`VeriPath`='" + filepath
-					+ "'where (`userID`='" + UserID + "'); ";
 			statement = connection.createStatement();
+			sql = "update userinfo set isVerified=true where userID='" + UserID + "'";
 			statement.execute(sql);
+			result = true;
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
-			DBUtil.Close(resultSet, statement, connection);
+			DBUtil.Close(statement, connection);
 			;
 		}
+		return result;
 	}
 
-	public static List<UserBean> getAllAppli() {
+	public static List<UserApplyBean> getAllUserApply() {
 		Connection connection = DBUtil.GetConnection();
-		List<UserBean> list = new ArrayList();
-		String sql = "select * from userinfo where isVerified=0";
+		List<UserApplyBean> list = new ArrayList();
+		String sql = "select * from userapply";
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
-				UserBean userBean = new UserBean();
-				userBean.SetUserID(resultSet.getString("userID"));
-				userBean.SetRealName(resultSet.getString("realName"));
-				userBean.SetStudentNumber(resultSet.getString("studentNumber"));
-				list.add(userBean);
+				String userID = resultSet.getString("userID");
+				String campusCardPath = resultSet.getString("campusCardPath");
+				boolean result = resultSet.getBoolean("result");
+				UserApplyBean applyBean = new UserApplyBean(userID, campusCardPath, result);
+				list.add(applyBean);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -284,5 +322,59 @@ public class UserDao {
 			;
 		}
 		return userBeans;
+	}
+	
+	public static boolean DeleteUserAll(String _UserID)
+	{
+		boolean result=false;
+		Connection connection = DBUtil.GetConnection();
+		String sql1="select announcementID from announcement where userID = '"+_UserID+"'";
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql1);
+			CommentDao commentDao=new CommentDao();
+			
+			while (resultSet.next()) {
+				String announcementID=resultSet.getString("announcementID");
+				commentDao.DeleteCommentByAnnouncementID(announcementID);
+				AnnouncementDao.DeleteAnnouncement(announcementID);				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			
+			;
+		}
+		String sql2="delete from comment where userID = '"+_UserID+"'";
+		try {
+			
+			statement.execute(sql2);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			
+			;
+		}
+		String sql3="delete from userinfo where userID = '"+_UserID+"'";
+		try {
+			statement.execute(sql3);
+			result=true;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			
+			;
+		}
+		
+		DBUtil.Close(resultSet, statement, connection);
+		return result;
 	}
 }

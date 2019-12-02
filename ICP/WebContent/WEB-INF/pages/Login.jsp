@@ -247,7 +247,7 @@ button {
 						<option value="用户">搜索用户</option>
 				</select></td>
 				<td width="400px"><input style="width: 300px; height: 25px;"
-					type="text" id="searchdiv" size="30px" value="${keyWord}"
+					type="text" id="searchdiv" size="30px" 
 					name="keyWord" /></td>
 				<td><input class="search" id="search" type="submit" value="搜索" />
 				</td>
@@ -256,11 +256,9 @@ button {
 	</form>
 	<div class="location2">
 		<ul>
-			<li><a href="#" class="chara1">主页</a></li>
-			<li><a href="#" class="chara1">近期热门</a></li>
-			<li><a href="#" class="chara1">我发布的通知</a></li>
-			<li><a href="#" class="chara1">我的个人信息</a></li>
-			<li><a href="#" class="chara1">网站问题反馈</a></li>
+			<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
+			<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
+			<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
 		</ul>
 	</div>
 
@@ -271,7 +269,6 @@ button {
 				class="text" placeholder="password" />
 			<input type="submit" name="button" value="登陆" />
 			<a href="/ICP/RegisterUI">注册</a>
-			<a href="">忘记密码</a>
 		</form>
 	</div>
 	<div class="divcubeb1">
@@ -279,7 +276,7 @@ button {
 	</div>
 	<div class="divcube1">
 		<div style="float: right;">
-			<a href="http://www.baidu.com">了解更多>></a>
+			<a href="/ICP/ShowAnnouncementByTypeUI?type=组织机构">了解更多>></a>
 		</div>
 		<%=IndexUI.ShowAnnouncementByType("组织机构")%>
 	</div>
@@ -289,7 +286,7 @@ button {
 	</div>
 	<div class="divcube2">
 		<div style="float: right;">
-			<a href="http://www.baidu.com">了解更多>></a>
+			<a href="/ICP/ShowAnnouncementByTypeUI?type=体育赛事">了解更多>></a>
 		</div>
 		<%=IndexUI.ShowAnnouncementByType("体育赛事")%>
 	</div>
@@ -299,7 +296,7 @@ button {
 	</div>
 	<div class="divcube3">
 		<div style="float: right;">
-			<a href="http://www.baidu.com">了解更多>></a>
+			<a href="/ICP/ShowAnnouncementByTypeUI?type=学术科研">了解更多>></a>
 		</div>
 		<%=IndexUI.ShowAnnouncementByType("学术科研")%>
 	</div>
@@ -310,7 +307,7 @@ button {
 	</div>
 	<div class="divcube4">
 		<div style="float: right;">
-			<a href="http://www.baidu.com">了解更多>></a>
+			<a href="/ICP/ShowAnnouncementByTypeUI?type=文娱艺术">了解更多>></a>
 		</div>
 		<%=IndexUI.ShowAnnouncementByType("文娱艺术")%>
 	</div>

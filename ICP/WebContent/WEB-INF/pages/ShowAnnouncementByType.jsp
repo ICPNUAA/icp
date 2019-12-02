@@ -1,11 +1,11 @@
-
+<%@page import="icp.web.UI.ShowAnnouncementByTypeUI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>待审核用户信息</title>
+<title>类别通知</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -67,13 +67,13 @@ li a:hover {
 	=1;
 }
 
-input {
+.input {
 	border: 1px #c0d8ef solid;
 	border-radius: 2px;
 	margin-left: 15px;
 }
 
-button {
+.button {
 	border: 1px #cccccc solid;
 	border-radius: 2px;
 }
@@ -144,72 +144,60 @@ button {
 }
 
 .divadd {
-	background-color: grey;
 	position: absolute;
 	left: 80%;
 	top: 15%;
-	height: 60px;
-	width: 110px;
 }
 </style>
 </head>
-
 <body>
 	<div>
 		<h1
 			style="font-size: 45px; font-family: 黑体; color: black; font-weight: 5px;">NUAA信息分享</h1>
 	</div>
+	<form action="/ICP/Search" method="get" align="center">
+		<table border="0px" class="location1">
+			<tr height="35px">
+				<td><select name="searchType">
+						<option value="通知">搜索通知</option>
+						<option value="标签">搜索标签</option>
+						<option value="用户">搜索用户</option>
+				</select></td>
+				<td width="400px"><input style="width: 300px; height: 25px;"
+					type="text" id="searchdiv" size="30px"
+					name="keyWord" /></td>
+				<td><input class="search" id="search" type="submit" value="搜索" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
 	<div class="location2">
 		<ul>
-			<li><a href="/ICP/AdminCheckUsersUI">待审核用户</a></li>
-			<li><a href="/ICP/AdminCheckTagsUI">待审核标签</a></li>
-			<li><a href="/ICP/AdminManageUserUI">管理用户</a></li>
-			<li><a href="/ICP/AdminManageAnnouncementUI">管理通知</a></li>
+			<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
+			<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
+			<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
 		</ul>
 	</div>
 
 	<div class="div1">
-		<h5
-			style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;">管理员,欢迎你！</h5>
+		<form>
+			<h5
+				style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;"><%=session.getAttribute("userID")%>，欢迎你！
+			</h5>
+		</form>
 	</div>
-	<div style="overflow-y: scroll; height: 600px">
-		<table border="1px" align="center">
-			<tr height="15px">
-				<td width="150px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">用户ID</h5>
-				</td>
-				<td><h5>${userID}</h5></td>
-			</tr>
-			<tr height="15px">
-				<td width="100px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">学号</h5>
-				</td>
-				<td><h5>${studentNumber}</h5></td>
-			</tr>
-			<tr height="15px">
-				<td width="100px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">真实姓名</h5>
-				</td>
-				<td><h5>${realName}</h5></td>
-			</tr>
-			<tr height="50px">
-				<td>
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">校园卡图片</h5>
-				</td>
-				<td width="350px"><img src="${campusCardPath}"></td>
-			</tr>
-			<tr height="50px">
-				<td></td>
-				<td width="50px"><span><a
-						href="/ICP/AgreeUserApply?userID=${userID}">审核通过</a></span> <span><a
-						href="/ICP/DeleteUserApply?userID=${userID}">拒绝申请</a></span></td>
-			</tr>
-		</table>
+	<!-- 显示已发送通知，使用表格 -->
+	<div style="height: 600px; overflow-y: scroll;position: relative; left: 50px">
+			<table border="0px" align="center">
+				<tr height="55px">
+					<td width="1000px">
+						<h5 style="font-size: 25px; font-family: 黑体; color: black; font-weight: 5px;">${type}类通知：</h5>
+					</td>
+				</tr>
+				<!-- 中间正文 -->
+				${showAnnouncementByType}
+			</table>
 	</div>
-
 </body>
 </html>

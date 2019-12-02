@@ -85,7 +85,7 @@ body {
 		style="font-size: 45px; font-family: Courier; text-align: center; color: white;">验证官方标签</h1>
 
 	<form action="${pageContext.request.contextPath}/VerifyTags"
-		method="post" enctype="multipart/form-data">
+		method="post" enctype="multipart/form-data" method="post">
 		<table border="0px" align="center">
 
 			<tr height="35px" align="center">

@@ -13,16 +13,16 @@ import icp.bean.AnnouncementBean;
 import icp.dao.AnnouncementDao;
 
 /**
- * Servlet implementation class IndexUI
+ * Servlet implementation class ShowAnnouncementByTypeUI
  */
-@WebServlet("/IndexUI")
-public class IndexUI extends HttpServlet {
+@WebServlet("/ShowAnnouncementByTypeUI")
+public class ShowAnnouncementByTypeUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexUI() {
+	public ShowAnnouncementByTypeUI() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,7 +34,10 @@ public class IndexUI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/pages/Index.jsp").forward(request, response);
+		String type = request.getParameter("type");
+		request.setAttribute("type", type);
+		request.setAttribute("showAnnouncementByType", ShowAnnouncementByType(type));
+		request.getRequestDispatcher("/WEB-INF/pages/ShowAnnouncementByType.jsp").forward(request, response);
 	}
 
 	/**
@@ -46,21 +49,23 @@ public class IndexUI extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
 	public static String ShowAnnouncementByType(String _type) {
 		StringBuffer stringBuffer = new StringBuffer();
 		List<AnnouncementBean> announcementBeans = AnnouncementDao.GetAnnouncementsByType(_type);
-		int count = 0;
 		for (AnnouncementBean bean : announcementBeans) {
-			if (count >= 6)
-				break;
 			stringBuffer.append(
-					"<div style=\"font-size:20px;height:30px\"><a style=\"width:500px\" href=\"ShowAnnouncementUI?announcementID="
-							+ bean.GetAnnouncementID() + "\">" + bean.GetAnnouncementTitle() + "</a></div>");
-
-			++count;
+					"<tr height=\"55px\">\r\n" + 
+					"   <td >\r\n" + 
+					"       <a href=\"/ICP/ShowAnnouncementUI?announcementID="+
+							bean.GetAnnouncementID()+
+					"\" style=\"font-size:25px;font-family:ºÚÌå; color:black;font-weight:5px;width:500px\">"+
+							bean.GetAnnouncementTitle()+
+					"</a>\r\n" + 
+					"   </td>\r\n" + 
+					"</tr>"
+					);
 		}
 		return stringBuffer.toString();
 	}
-
 }

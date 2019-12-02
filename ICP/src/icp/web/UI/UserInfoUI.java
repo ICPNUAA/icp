@@ -10,19 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import icp.bean.AnnouncementBean;
+import icp.bean.TagBean;
+import icp.bean.UserBean;
 import icp.dao.AnnouncementDao;
+import icp.dao.TagDao;
+import icp.dao.UserDao;
 
 /**
- * Servlet implementation class MyAnnouncementUI
+ * Servlet implementation class UserInfoUI
  */
-@WebServlet("/MyAnnouncementUI")
-public class MyAnnouncementUI extends HttpServlet {
+@WebServlet("/UserInfoUI")
+public class UserInfoUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MyAnnouncementUI() {
+	public UserInfoUI() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,7 +38,29 @@ public class MyAnnouncementUI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/pages/MyAnnouncement.jsp").forward(request, response);
+		String userID=request.getParameter("userID");
+		UserBean userBean=UserDao.GetUserByID(userID);
+		
+		// show tags
+		if (userBean.GetUserTag()!=null) {
+			String[] tagsID = userBean.GetUserTag().split("#");
+			StringBuffer officialTags = new StringBuffer();
+			StringBuffer normalTags = new StringBuffer();
+			for (String tagID : tagsID) {
+				if (tagID.equals(""))
+					continue;
+				TagBean bean = TagDao.GetTagByID(tagID);
+				if (bean.GetTagType()) {
+					officialTags.append("#" + bean.GetTagName() + " ");
+				} else {
+					normalTags.append("#" + bean.GetTagName() + " ");
+				}
+			}
+			request.setAttribute("officialTags", officialTags.toString());
+			request.setAttribute("normalTags", normalTags.toString());
+		}
+
+		request.getRequestDispatcher("WEB-INF/pages/UserInfo.jsp").forward(request, response);
 	}
 
 	/**
@@ -43,7 +69,7 @@ public class MyAnnouncementUI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub\
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
@@ -58,15 +84,10 @@ public class MyAnnouncementUI extends HttpServlet {
 							"   <td >\r\n" + 
 							"       <a href=\"/ICP/ShowAnnouncementUI?announcementID="+
 									announcementBean.GetAnnouncementID()+
-							"\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:500px\">"+
+							"\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:400px\">"+
 									i+"、"+announcementBean.GetAnnouncementTitle()+
 							"</a>\r\n" + 
 							"   </td>\r\n" + 
-							"   <td >\r\n" + 
-							"       <a href=\"/ICP/DeleteAnnouncement?announcementID=" + 
-									announcementBean.GetAnnouncementID() + 
-							"		\"  onclick=\"alert('删除成功')\">删除</a>\r\n" + 
-							"   </td>" + 
 							"</tr>"
 							);
 		}

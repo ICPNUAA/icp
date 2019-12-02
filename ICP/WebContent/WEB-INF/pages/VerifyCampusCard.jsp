@@ -82,14 +82,11 @@ body {
 		style="font-size: 45px; font-family: Courier; text-align: center; color: white;">上传校园卡图片</h1>
 
 	<form action="${pageContext.request.contextPath}/VerifyCampusCard"
-		enctype="multipart/form-data" encoding="multipart/form-data">
+		enctype="multipart/form-data" encoding="multipart/form-data" method="post">
 		<table border="0px" align="center">
 
 			<tr height="35px" align="center">
 				<td><input type="file" name="campuscard" /> 
-				<!--<input type="file" name="image" accept=""/>-->
-					<!--<img src="" width="200px" height="200px" id="img-change">--> 
-					<input type="button" id="campusCard" value="上传" /></td>
 			</tr>
 
 			<tr align="center">

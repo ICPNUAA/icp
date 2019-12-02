@@ -64,8 +64,7 @@ public class Search extends HttpServlet {
 		StringBuffer resultStr = new StringBuffer();
 		if (_searchType.equals("通知")) {
 			// search announcement
-			AnnouncementDao announcementDao = new AnnouncementDao();
-			List<AnnouncementBean> announcementBeans = announcementDao.GetAnnouncementsByTitle(_keyWord);
+			List<AnnouncementBean> announcementBeans = AnnouncementDao.GetAnnouncementsByTitle(_keyWord);
 			if (announcementBeans.size() > 100) {
 				announcementBeans = announcementBeans.subList(0, 100);
 			}
@@ -77,23 +76,21 @@ public class Search extends HttpServlet {
 			}
 		} else if (_searchType.equals("用户")) {
 			// search user
-			UserDao userDao = new UserDao();
-			List<UserBean> userBeans = userDao.GetUserByLikeID(_keyWord);
+			List<UserBean> userBeans = UserDao.GetUserByLikeID(_keyWord);
 			if (userBeans.size() > 100) {
 				userBeans = userBeans.subList(0, 100);
 			}
 			for (UserBean bean : userBeans) {
-				resultStr.append("<tr height=\"40px\">\r\n" + "   <td >\r\n" + "       <a href=\"/ICP/ShowUser?userID="
+				if(bean.GetIsAdmin())
+					continue;
+				resultStr.append("<tr height=\"40px\">\r\n" + "   <td >\r\n" + "       <a href=\"/ICP/UserInfoUI?userID="
 						+ bean.GetUserID()
 						+ "\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:500px\">"
 						+ bean.GetUserID() + "</a>\r\n" + "   </td>\r\n" + "</tr>");
 			}
 		} else {
 			// search tags
-			TagDao tagDao = new TagDao();
-			AnnouncementDao announcementDao = new AnnouncementDao();
-			UserDao userDao = new UserDao();
-			List<TagBean> tagBeans = tagDao.GetTagsByLikeName(_keyWord);
+			List<TagBean> tagBeans = TagDao.GetTagsByLikeName(_keyWord);
 			//tag num should less than 10
 			if (tagBeans.size() > 10) {
 				tagBeans = tagBeans.subList(0, 10);
@@ -103,12 +100,12 @@ public class Search extends HttpServlet {
 			List<UserBean> userBeans = new ArrayList<>();
 			for (TagBean tagBean : tagBeans) {
 				// for each tag get announcement
-				announcementBeans.addAll(announcementDao.GetAnnouncementsByTag(tagBean.GetTagID()));
+				announcementBeans.addAll(AnnouncementDao.GetAnnouncementsByTag(tagBean.GetTagID()));
 				if (announcementBeans.size() > 100) {
 					announcementBeans = announcementBeans.subList(0, 100);
 				}
 				// for each tag get userinfo
-				userBeans.addAll(userDao.GetUserByTags(tagBean.GetTagID()));
+				userBeans.addAll(UserDao.GetUserByTags(tagBean.GetTagID()));
 				if (userBeans.size() > 100) {
 					userBeans = userBeans.subList(0, 100);
 				}
@@ -135,7 +132,9 @@ public class Search extends HttpServlet {
 					"					</td>\r\n" + 
 					"				</tr>");
 			for (UserBean bean : userBeans) {
-				resultStr.append("<tr height=\"40px\">\r\n" + "   <td >\r\n" + "       <a href=\"/ICP/ShowUser?userID="
+				if(bean.GetIsAdmin())
+					continue;
+				resultStr.append("<tr height=\"40px\">\r\n" + "   <td >\r\n" + "       <a href=\"/ICP/UserInfoUI?userID="
 						+ bean.GetUserID()
 						+ "\" style=\"font-size:25px;font-family:黑体; color:black;font-weight:5px;width:500px\">"
 						+ bean.GetUserID() + "</a>\r\n" + "   </td>\r\n" + "</tr>");

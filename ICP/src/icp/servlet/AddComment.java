@@ -31,6 +31,14 @@ public class AddComment extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(request.getSession().getAttribute("userID")==null) {
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write("<script language=javascript>");
+			response.getWriter().write("alert('ÇëÏÈµÇÂ¼£¡');");
+			response.getWriter().write("location.href='/ICP/LoginUI';");
+			response.getWriter().write("</script>");
+			return;
+		}
 		if(request.getSession().getAttribute("token")!=null) {
 			request.getSession().removeAttribute("token");
 			

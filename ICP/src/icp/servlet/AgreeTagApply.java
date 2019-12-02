@@ -1,4 +1,4 @@
-package icp.web.UI;
+package icp.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import icp.dao.UserDao;
+import icp.dao.TagDao;
 
 /**
- * Servlet implementation class VerifyCampusCardUI
+ * Servlet implementation class AgreeTagApply
  */
-@WebServlet("/VerifyCampusCardUI")
-public class VerifyCampusCardUI extends HttpServlet {
+@WebServlet("/AgreeTagApply")
+public class AgreeTagApply extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VerifyCampusCardUI() {
+    public AgreeTagApply() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,16 +29,10 @@ public class VerifyCampusCardUI extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userID=request.getSession().getAttribute("userID").toString();
-		if(UserDao.GetUserByID(userID).GetIsVerified()) {
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().write("<script language=javascript>");
-			response.getWriter().write("alert('账号已通过验证');");
-			response.getWriter().write("location.href='/ICP/UserCenterUI';");
-			response.getWriter().write("</script>");
-			return;
-		}
-		request.getRequestDispatcher("/WEB-INF/pages/VerifyCampusCard.jsp").forward(request, response);
+		String tagID=request.getParameter("tagID");
+		TagDao.VeriTagSuccess(tagID);
+		TagDao.DeleteTagApply(tagID);
+		request.getRequestDispatcher("AdminCheckTagsUI").forward(request, response);
 	}
 
 	/**

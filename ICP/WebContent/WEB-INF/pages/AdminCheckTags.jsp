@@ -1,11 +1,12 @@
-
+<%@page import="icp.web.UI.AdminCheckTagsUI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>待审核用户信息</title>
+<title>审核标签</title>
 <style type="text/css">
 body {
 	background-color: #F0F8FF;
@@ -169,46 +170,28 @@ button {
 	</div>
 
 	<div class="div1">
-		<h5
-			style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;">管理员,欢迎你！</h5>
+		<form>
+			<h5
+				style="font-size: 23px; font-family: 黑体; color: white; font-weight: 5px;">管理员,欢迎你！</h5>
+		</form>
 	</div>
-	<div style="overflow-y: scroll; height: 600px">
-		<table border="1px" align="center">
-			<tr height="15px">
-				<td width="150px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">用户ID</h5>
-				</td>
-				<td><h5>${userID}</h5></td>
-			</tr>
-			<tr height="15px">
-				<td width="100px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">学号</h5>
-				</td>
-				<td><h5>${studentNumber}</h5></td>
-			</tr>
-			<tr height="15px">
-				<td width="100px">
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">真实姓名</h5>
-				</td>
-				<td><h5>${realName}</h5></td>
-			</tr>
-			<tr height="50px">
-				<td>
-					<h5
-						style="font-size: 20px; font-family: 黑体; color: black; font-weight: 5px;">校园卡图片</h5>
-				</td>
-				<td width="350px"><img src="${campusCardPath}"></td>
-			</tr>
-			<tr height="50px">
-				<td></td>
-				<td width="50px"><span><a
-						href="/ICP/AgreeUserApply?userID=${userID}">审核通过</a></span> <span><a
-						href="/ICP/DeleteUserApply?userID=${userID}">拒绝申请</a></span></td>
-			</tr>
-		</table>
+
+	<div style="height: 600px; overflow-y: scroll">
+		<form style="position: relative; left: 50px">
+			<table border="1px" align="center">
+				<tr height="30px">
+					<td width="20%">
+						<h3 style="font-size: 20px; font-weight: 5px;">待审核的标签名</h3>
+					</td>
+					<td width="20%">
+						<h3 style="font-size: 20px; font-weight: 5px;">申请用户名</h3>
+					</td>
+					<td width="10%"></td>
+				</tr>
+				<!-- 中间正文 -->
+				<%=AdminCheckTagsUI.ShowToBeVeriedList()%>
+			</table>
+		</form>
 	</div>
 
 </body>

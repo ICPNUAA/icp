@@ -36,7 +36,7 @@ public class VerifyTagsUI extends HttpServlet {
 		UserBean userBean = UserDao.GetUserByID(_userID);
 		String[] tags = userBean.GetUserTag().split("#");
 		for (String tagID : tags) {
-			if (tagID.equals(""))
+			if (tagID.equals("") || TagDao.GetTagByID(tagID).GetTagType())
 				continue;
 			resultStr.append("<option value=\"" + tagID + "\">" + TagDao.GetTagByID(tagID).GetTagName() + "</option>");
 		}
