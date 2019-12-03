@@ -211,7 +211,7 @@ button {
 			<ul>
 				<li><a href="/ICP/IndexUI" class="chara1">主页</a></li>
 				<li><a href="/ICP/MyAnnouncementUI" class="chara1">我发布的通知</a></li>
-				<li><a href="/ICP/UserCenterUIServlet" class="chara1">我的个人信息</a></li>
+				<li><a href="/ICP/UserCenterUI" class="chara1">我的个人信息</a></li>
 			</ul>
 		</div>
 	</div>

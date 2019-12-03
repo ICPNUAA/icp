@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import icp.dao.AnnouncementDao;
 import icp.dao.TagDao;
+import icp.dao.UserDao;
 
 /**
  * Servlet implementation class AddAnnouncement
@@ -31,14 +32,22 @@ public class AddAnnouncement extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String userID=(String) request.getSession().getAttribute("userID");
 		// TODO Auto-generated method stub
-		if(request.getSession().getAttribute("userID")==null) {
+		if(userID==null) {
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().write("<script language=javascript>");
 			response.getWriter().write("alert('请先登录！');");
 			response.getWriter().write("location.href='/ICP/LoginUI';");
 			response.getWriter().write("</script>");
 			return;
+		}
+		if(!UserDao.GetUserByID(userID).GetIsVerified()) {
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write("<script language=javascript>");
+			response.getWriter().write("alert('请先验证身份！');");
+			response.getWriter().write("location.href='/ICP/UserCenterUI';");
+			response.getWriter().write("</script>");
 		}
 		if (request.getSession().getAttribute("token") != null) {
 			request.getSession().removeAttribute("token");
